@@ -1,0 +1,37 @@
+.page {
+  padding: 6rem var(--page-padding) 2rem;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+.info {
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.label {
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.address {
+  white-space: pre-line;
+}
+
+.email a,
+.phone a {
+  transition: opacity 0.2s;
+}
+
+.email a:hover,
+.phone a:hover {
+  opacity: 0.6;
+}

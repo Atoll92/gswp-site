@@ -1,0 +1,51 @@
+.container {
+  padding: 6rem var(--page-padding) 2rem;
+  min-height: 100vh;
+}
+
+.yearGroup {
+  margin-bottom: 4rem;
+}
+
+.yearLabel {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 0.5rem;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  flex: 0 0 auto;
+  width: 280px;
+  height: 200px;
+}
+
+.item:first-child {
+  width: 380px;
+  height: 260px;
+}
+
+@media (max-width: 768px) {
+  .item {
+    width: 220px;
+    height: 160px;
+  }
+
+  .item:first-child {
+    width: 280px;
+    height: 200px;
+  }
+}

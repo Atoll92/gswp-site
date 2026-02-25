@@ -1,0 +1,52 @@
+.footer {
+  padding: 4rem var(--page-padding) 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.info {
+  max-width: 300px;
+}
+
+.firmName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: 0.1rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.navLink {
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.navLink:hover {
+  opacity: 0.6;
+}
+
+.credits {
+  position: fixed;
+  bottom: var(--page-padding);
+  left: var(--page-padding);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.credits:hover {
+  opacity: 0.6;
+}

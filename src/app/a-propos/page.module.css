@@ -1,0 +1,29 @@
+.page {
+  padding: 6rem var(--page-padding) 2rem;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.content {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.content p {
+  margin-bottom: 1rem;
+}
+
+.images {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.images img {
+  max-height: 300px;
+  width: auto;
+  object-fit: cover;
+}

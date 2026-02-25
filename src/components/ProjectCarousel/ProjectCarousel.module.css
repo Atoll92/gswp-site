@@ -1,0 +1,39 @@
+.carousel {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: 0.25rem;
+  width: max-content;
+}
+
+.slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  height: 50vh;
+  min-height: 320px;
+  max-height: 500px;
+}
+
+.slide img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .slide {
+    height: 35vh;
+    min-height: 220px;
+  }
+}
