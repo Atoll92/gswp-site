@@ -3,7 +3,7 @@
 }
 
 .carouselSection {
-  padding-top: 6rem;
+  padding-top: var(--content-top);
   margin-bottom: 3rem;
 }
 

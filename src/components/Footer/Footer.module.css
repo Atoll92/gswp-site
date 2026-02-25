@@ -38,9 +38,7 @@
 }
 
 .credits {
-  position: fixed;
-  bottom: var(--page-padding);
-  left: var(--page-padding);
+  padding: 2rem var(--page-padding);
   font-size: 0.85rem;
   color: var(--color-muted);
   cursor: pointer;

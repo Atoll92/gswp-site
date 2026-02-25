@@ -1,5 +1,5 @@
 .page {
-  padding: 6rem var(--page-padding) 2rem;
+  padding: var(--content-top) var(--page-padding) 2rem;
   min-height: 100vh;
   max-width: 900px;
   margin: 0 auto;

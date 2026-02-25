@@ -8,12 +8,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: var(--page-padding);
-  pointer-events: none;
-  mix-blend-mode: difference;
-}
-
-.header > * {
-  pointer-events: auto;
+  background: var(--color-bg);
 }
 
 .firmName {
