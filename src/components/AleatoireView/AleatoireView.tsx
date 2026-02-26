@@ -22,14 +22,8 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return shuffled
 }
 
-const imageSizes = [
-  { width: 600, height: 450 },
-  { width: 350, height: 260 },
-  { width: 500, height: 620 },
-  { width: 700, height: 400 },
-  { width: 300, height: 400 },
-  { width: 450, height: 340 },
-]
+// Widths used to request appropriate resolution from Sanity per grid slot
+const imageWidths = [600, 350, 500, 700, 300, 450]
 
 export default function AleatoireView({ projects }: AleatoireViewProps) {
   const shuffled = useMemo(() => {
@@ -47,13 +41,12 @@ export default function AleatoireView({ projects }: AleatoireViewProps) {
     >
       <div className={styles.grid}>
         {shuffled.map((project, i) => {
-          const size = imageSizes[i % imageSizes.length]
+          const width = imageWidths[i % imageWidths.length]
           return (
             <div key={project._id} className={styles.item}>
               <ProjectCard
                 project={project}
-                width={size.width}
-                height={size.height}
+                width={width}
                 sizes="(max-width: 768px) 90vw, 40vw"
               />
             </div>

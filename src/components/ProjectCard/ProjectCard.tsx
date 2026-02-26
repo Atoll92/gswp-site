@@ -31,12 +31,13 @@ export default function ProjectCard({
       href={`/projet/${project.slug.current}`}
       className={`${styles.card} ${className}`}
     >
-      <div className={styles.imageWrapper} style={{ aspectRatio: `${width}/${height}` }}>
+      <div className={styles.imageWrapper}>
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={project.title}
-            fill
+            width={width}
+            height={height}
             className={styles.image}
             sizes={sizes}
           />
