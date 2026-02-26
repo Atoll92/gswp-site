@@ -23,7 +23,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const hasSanityImage = project.coverImage?.asset?._ref
   const imageUrl = hasSanityImage
-    ? urlFor(project.coverImage).width(width).height(height).url()
+    ? urlFor(project.coverImage).width(width * 2).url()
     : project.localCover || null
 
   return (
@@ -31,13 +31,12 @@ export default function ProjectCard({
       href={`/projet/${project.slug.current}`}
       className={`${styles.card} ${className}`}
     >
-      <div className={styles.imageWrapper}>
+      <div className={styles.imageWrapper} style={{ aspectRatio: `${width}/${height}` }}>
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={project.title}
-            width={width}
-            height={height}
+            fill
             className={styles.image}
             sizes={sizes}
           />
