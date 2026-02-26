@@ -44,8 +44,15 @@ function HeaderNav() {
 export default function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.firmName}>
-        <Link href="/">Georgi Stanishev & William Parlon</Link>
+      <div className={styles.left}>
+        <div className={styles.firmName}>
+          <Link href="/">Georgi Stanishev & William Parlon</Link>
+        </div>
+        <nav className={styles.pageNav}>
+          <Link href="/a-propos" className={styles.pageLink}>À Propos</Link>
+          <Link href="/journal" className={styles.pageLink}>Journal</Link>
+          <Link href="/contact" className={styles.pageLink}>Contact</Link>
+        </nav>
       </div>
       <Suspense>
         <HeaderNav />

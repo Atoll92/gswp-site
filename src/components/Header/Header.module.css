@@ -11,6 +11,12 @@
   background: var(--color-bg);
 }
 
+.left {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
 .firmName {
   font-weight: 700;
   font-size: 1.1rem;
@@ -20,6 +26,21 @@
 
 .firmName a {
   display: block;
+}
+
+.pageNav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.pageLink {
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: opacity 0.2s;
+}
+
+.pageLink:hover {
+  opacity: 0.6;
 }
 
 .nav {
