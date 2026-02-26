@@ -21,10 +21,10 @@ export default function ProjectCard({
   className = '',
   sizes = '(max-width: 768px) 90vw, 400px',
 }: ProjectCardProps) {
-  const hasImage = project.coverImage?.asset?._ref
-  const imageUrl = hasImage
+  const hasSanityImage = project.coverImage?.asset?._ref
+  const imageUrl = hasSanityImage
     ? urlFor(project.coverImage).width(width).height(height).url()
-    : null
+    : project.localCover || null
 
   return (
     <Link

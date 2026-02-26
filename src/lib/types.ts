@@ -15,6 +15,9 @@ export interface Project {
   images: SanityImage[]
   planImage: SanityImage | null
   order: number
+  // Local images for sample data (before Sanity is populated)
+  localCover?: string
+  localImages?: string[]
 }
 
 export interface Category {

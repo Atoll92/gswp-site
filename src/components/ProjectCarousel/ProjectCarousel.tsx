@@ -7,33 +7,53 @@ import { urlFor } from '../../../sanity/lib/image'
 
 interface ProjectCarouselProps {
   images: SanityImage[]
+  localImages?: string[]
   title: string
 }
 
-export default function ProjectCarousel({ images, title }: ProjectCarouselProps) {
-  // Filter out images with no valid asset ref (sample data placeholders)
-  const validImages = images.filter((img) => img?.asset?._ref)
+export default function ProjectCarousel({ images, localImages, title }: ProjectCarouselProps) {
+  // Use Sanity images if available, otherwise local images
+  const sanityImages = images.filter((img) => img?.asset?._ref)
 
-  if (validImages.length === 0) return null
-
-  return (
-    <div className={styles.carousel}>
-      <div className={styles.track}>
-        {validImages.map((image, i) => {
-          const url = urlFor(image).height(500).url()
-          return (
+  if (sanityImages.length > 0) {
+    return (
+      <div className={styles.carousel}>
+        <div className={styles.track}>
+          {sanityImages.map((image, i) => (
             <div key={i} className={styles.slide}>
               <Image
-                src={url}
+                src={urlFor(image).height(500).url()}
                 alt={`${title} — ${i + 1}`}
                 width={750}
                 height={500}
                 sizes="auto"
               />
             </div>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+  if (localImages && localImages.length > 0) {
+    return (
+      <div className={styles.carousel}>
+        <div className={styles.track}>
+          {localImages.map((src, i) => (
+            <div key={i} className={styles.slide}>
+              <Image
+                src={src}
+                alt={`${title} — ${i + 1}`}
+                width={750}
+                height={500}
+                sizes="auto"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }

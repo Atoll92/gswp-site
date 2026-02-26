@@ -22,7 +22,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
       <Header />
       <div className={styles.page}>
         <div className={styles.carouselSection}>
-          <ProjectCarousel images={allImages} title={project.title} />
+          <ProjectCarousel
+            images={allImages}
+            localImages={project.localImages}
+            title={project.title}
+          />
         </div>
 
         <div className={styles.content}>

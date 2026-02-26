@@ -28,11 +28,19 @@ export const sampleProjects: Project[] = [
     projectType: 'Exhibition Scenography',
     surface: '650m2',
     curator: 'Stéphane Ashpool, Méryl Laurent',
-    description: 'Figure Libre invites visitors to discover how sportswear can be an art form, an approach that is not only technical—responding to the body\'s urgent need to move with ease in pursuit of performance—but also a visual celebration that honors the body through the choice of fabrics, textiles, and embellishments that celebrate prowess.',
+    description: 'Figure Libre invites visitors to discover how sportswear can be an art form, an approach that is not only technical—responding to the body\'s urgent need to move with ease in pursuit of performance—but also a visual celebration that honors the body through the choice of fabrics, textiles, and embellishments that celebrate prowess.\n\nConceived as a flexible, adaptable, technical, organic, woven, visual, and typological field of exploration, the installation follows Stéphane Ashpool\'s creative journey through his work and collaborations with the crafts of 19m. It takes the shape of an arena relating the themes of a super modern and intemporal architecture, a sports stadium and a performance stage.',
     coverImage: placeholder,
     images: [],
     planImage: null,
     order: 1,
+    localCover: '/images/projects/figure-libre-1.jpg',
+    localImages: [
+      '/images/projects/figure-libre-1.jpg',
+      '/images/projects/figure-libre-2.jpg',
+      '/images/projects/figure-libre-3.jpg',
+      '/images/projects/figure-libre-4.jpg',
+      '/images/projects/axo.jpg',
+    ],
   },
   {
     _id: 'p-2',
@@ -51,6 +59,11 @@ export const sampleProjects: Project[] = [
     images: [],
     planImage: null,
     order: 2,
+    localCover: '/images/projects/the-wall.jpg',
+    localImages: [
+      '/images/projects/the-wall.jpg',
+      '/images/projects/the-wall-2.jpg',
+    ],
   },
   {
     _id: 'p-3',
@@ -69,6 +82,10 @@ export const sampleProjects: Project[] = [
     images: [],
     planImage: null,
     order: 3,
+    localCover: '/images/projects/culture-market.jpg',
+    localImages: [
+      '/images/projects/culture-market.jpg',
+    ],
   },
   {
     _id: 'p-4',
@@ -87,6 +104,11 @@ export const sampleProjects: Project[] = [
     images: [],
     planImage: null,
     order: 4,
+    localCover: '/images/projects/hermes-1.jpg',
+    localImages: [
+      '/images/projects/hermes-1.jpg',
+      '/images/projects/hermes-2.jpg',
+    ],
   },
   {
     _id: 'p-5',
@@ -105,6 +127,10 @@ export const sampleProjects: Project[] = [
     images: [],
     planImage: null,
     order: 5,
+    localCover: '/images/projects/ball-theater.jpg',
+    localImages: [
+      '/images/projects/ball-theater.jpg',
+    ],
   },
   {
     _id: 'p-6',
@@ -123,5 +149,10 @@ export const sampleProjects: Project[] = [
     images: [],
     planImage: null,
     order: 6,
+    localCover: '/images/projects/les-portes.jpg',
+    localImages: [
+      '/images/projects/les-portes.jpg',
+      '/images/projects/crop.jpg',
+    ],
   },
 ]
