@@ -37,14 +37,50 @@
   opacity: 0.6;
 }
 
-.credits {
+.creditsWrapper {
   padding: 2rem var(--page-padding);
+}
+
+.creditsToggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
   font-size: 0.85rem;
   color: var(--color-muted);
   cursor: pointer;
   transition: opacity 0.2s;
 }
 
-.credits:hover {
+.creditsToggle:hover {
+  opacity: 0.6;
+}
+
+.creditsDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+}
+
+.creditsDetails.creditsOpen {
+  max-height: 4rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+
+.creditsDetails a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.creditsDetails a:hover {
   opacity: 0.6;
 }
