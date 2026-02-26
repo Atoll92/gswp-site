@@ -11,6 +11,7 @@ export default defineConfig({
   title: 'GSWP Studio',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  basePath: '/studio',
   plugins: [
     structureTool({ structure }),
     visionTool(),
