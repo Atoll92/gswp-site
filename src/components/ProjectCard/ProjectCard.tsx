@@ -22,8 +22,11 @@ export default function ProjectCard({
   sizes = '(max-width: 768px) 90vw, 400px',
 }: ProjectCardProps) {
   const hasSanityImage = project.coverImage?.asset?._ref
+  const isGif = hasSanityImage?.endsWith('-gif')
   const imageUrl = hasSanityImage
-    ? urlFor(project.coverImage).width(width * 2).url()
+    ? isGif
+      ? urlFor(project.coverImage).url()
+      : urlFor(project.coverImage).width(width * 2).url()
     : project.localCover || null
 
   return (
@@ -40,6 +43,7 @@ export default function ProjectCard({
             height={height}
             className={styles.image}
             sizes={sizes}
+            unoptimized={isGif}
           />
         ) : (
           <div className={styles.placeholder}>

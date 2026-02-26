@@ -19,17 +19,21 @@ export default function ProjectCarousel({ images, localImages, title }: ProjectC
     return (
       <div className={styles.carousel}>
         <div className={styles.track}>
-          {sanityImages.map((image, i) => (
-            <div key={i} className={styles.slide}>
-              <Image
-                src={urlFor(image).height(500).url()}
-                alt={`${title} — ${i + 1}`}
-                width={750}
-                height={500}
-                sizes="auto"
-              />
-            </div>
-          ))}
+          {sanityImages.map((image, i) => {
+            const isGif = image.asset._ref.endsWith('-gif')
+            return (
+              <div key={i} className={styles.slide}>
+                <Image
+                  src={isGif ? urlFor(image).url() : urlFor(image).height(500).url()}
+                  alt={`${title} — ${i + 1}`}
+                  width={750}
+                  height={500}
+                  sizes="auto"
+                  unoptimized={isGif}
+                />
+              </div>
+            )
+          })}
         </div>
       </div>
     )
