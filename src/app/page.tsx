@@ -2,6 +2,8 @@ import { Suspense } from 'react'
 import { getProjects, getCategories } from '../../sanity/lib/queries'
 import HomepageClient from '@/components/HomepageClient'
 
+export const revalidate = 0
+
 export default async function HomePage() {
   const [projects, categories] = await Promise.all([
     getProjects(),

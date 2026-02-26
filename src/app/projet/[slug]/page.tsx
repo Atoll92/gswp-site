@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation'
 import { getProject, getProjects } from '../../../../sanity/lib/queries'
 import ProjectDetailClient from './ProjectDetailClient'
 
+export const revalidate = 0
+export const dynamicParams = true
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }

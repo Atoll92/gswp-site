@@ -15,7 +15,7 @@ export function getClient(): SanityClient {
       projectId,
       dataset,
       apiVersion,
-      useCdn: true,
+      useCdn: false,
     })
   }
   return _client
@@ -23,5 +23,5 @@ export function getClient(): SanityClient {
 
 // Keep backward compat — only access .client if actually configured
 export const client = isSanityConfigured
-  ? createClient({ projectId, dataset, apiVersion, useCdn: true })
+  ? createClient({ projectId, dataset, apiVersion, useCdn: false })
   : (null as unknown as SanityClient)

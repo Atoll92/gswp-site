@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import type { JournalPost } from '@/lib/types'
@@ -20,13 +21,13 @@ export default function JournalClient({ posts }: JournalClientProps) {
         {posts.length > 0 ? (
           <div className={styles.list}>
             {posts.map((post) => (
-              <div key={post._id} className={styles.postItem}>
-                {post.coverImage && (
+              <article key={post._id} className={styles.postItem}>
+                {post.coverImage?.asset && (
                   <Image
-                    src={urlFor(post.coverImage).width(200).height(140).url()}
+                    src={urlFor(post.coverImage).width(400).height(280).url()}
                     alt={post.title}
-                    width={200}
-                    height={140}
+                    width={400}
+                    height={280}
                     className={styles.postImage}
                   />
                 )}
@@ -39,8 +40,13 @@ export default function JournalClient({ posts }: JournalClientProps) {
                       day: 'numeric',
                     })}
                   </div>
+                  {post.content && (
+                    <div className={styles.postBody}>
+                      <PortableText value={post.content} />
+                    </div>
+                  )}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         ) : (
