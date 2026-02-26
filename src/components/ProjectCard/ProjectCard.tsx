@@ -31,7 +31,7 @@ export default function ProjectCard({
       href={`/projet/${project.slug.current}`}
       className={`${styles.card} ${className}`}
     >
-      <div className={styles.imageWrapper} style={{ width, height }}>
+      <div className={styles.imageWrapper}>
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -42,7 +42,7 @@ export default function ProjectCard({
             sizes={sizes}
           />
         ) : (
-          <div className={styles.placeholder} style={{ width, height }}>
+          <div className={styles.placeholder}>
             <span className={styles.placeholderTitle}>{project.title}</span>
           </div>
         )}
