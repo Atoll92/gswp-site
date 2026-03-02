@@ -16,7 +16,7 @@
 
 .row {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -30,22 +30,10 @@
 .item {
   flex: 0 0 auto;
   width: 280px;
-  height: 200px;
-}
-
-.item:first-child {
-  width: 380px;
-  height: 260px;
 }
 
 @media (max-width: 768px) {
   .item {
-    width: 220px;
-    height: 160px;
-  }
-
-  .item:first-child {
-    width: 280px;
-    height: 200px;
+    width: 200px;
   }
 }

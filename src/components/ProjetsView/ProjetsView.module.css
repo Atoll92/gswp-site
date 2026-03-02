@@ -39,7 +39,7 @@
 
 .row {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -53,12 +53,6 @@
 .item {
   flex: 0 0 auto;
   width: 260px;
-  height: 190px;
-}
-
-.item:nth-child(2) {
-  width: 340px;
-  height: 250px;
 }
 
 @media (max-width: 768px) {
@@ -68,11 +62,5 @@
 
   .item {
     width: 200px;
-    height: 150px;
-  }
-
-  .item:nth-child(2) {
-    width: 260px;
-    height: 190px;
   }
 }
