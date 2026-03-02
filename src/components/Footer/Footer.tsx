@@ -15,7 +15,7 @@ export default function Footer() {
           <div className={styles.subtitle}>75002 Paris</div>
         </div>
         <nav className={styles.nav}>
-          <Link href="/a-propos" className={styles.navLink}>À Propos</Link>
+          <Link href="/a-propos" className={styles.navLink}>About</Link>
           <Link href="/journal" className={styles.navLink}>Journal</Link>
           <Link href="/contact" className={styles.navLink}>Contact</Link>
           <Link href="/" className={styles.navLink}>Portfolio</Link>
@@ -27,11 +27,11 @@ export default function Footer() {
           onClick={() => setCreditsOpen(!creditsOpen)}
           aria-expanded={creditsOpen}
         >
-          Crédits
+          Credits
         </button>
         <div className={`${styles.creditsDetails} ${creditsOpen ? styles.creditsOpen : ''}`}>
-          <span>Graphisme : <a href="https://www.benoitmagdelaine.com" target="_blank" rel="noopener noreferrer">Benoit Magdelaine</a></span>
-          <span>Développement web : <a href="https://www.doublegeste.com" target="_blank" rel="noopener noreferrer">Agence Double Geste</a></span>
+          <span>Graphic Design: <a href="https://www.benoitmagdelaine.com" target="_blank" rel="noopener noreferrer">Benoit Magdelaine</a></span>
+          <span>Web Development: <a href="https://www.doublegeste.com" target="_blank" rel="noopener noreferrer">Agence Double Geste</a></span>
         </div>
       </div>
     </>

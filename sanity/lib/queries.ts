@@ -65,6 +65,34 @@ export async function getProject(slug: string): Promise<Project | null> {
   }
 }
 
+export async function getRelatedProjects(categoryId: string, excludeId: string): Promise<Project[]> {
+  if (!isSanityConfigured) {
+    return sampleProjects.filter(
+      (p) => p.category?._id === categoryId && p._id !== excludeId
+    )
+  }
+
+  try {
+    const results = await getClient().fetch(`
+      *[_type == "project" && category._ref == $categoryId && _id != $excludeId] | order(order asc, year desc) {
+        _id,
+        title,
+        slug,
+        category->{_id, title, slug, order},
+        year,
+        location,
+        country,
+        venue,
+        coverImage,
+        order
+      }
+    `, { categoryId, excludeId })
+    return results || []
+  } catch {
+    return []
+  }
+}
+
 export async function getCategories(): Promise<Category[]> {
   if (!isSanityConfigured) return sampleCategories
 

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getProject, getProjects } from '../../../../sanity/lib/queries'
+import { getProject, getProjects, getRelatedProjects } from '../../../../sanity/lib/queries'
 import ProjectDetailClient from './ProjectDetailClient'
 
 export const revalidate = 0
@@ -20,5 +20,9 @@ export default async function ProjetPage({ params }: PageProps) {
 
   if (!project) notFound()
 
-  return <ProjectDetailClient project={project} />
+  const relatedProjects = project.category
+    ? await getRelatedProjects(project.category._id, project._id)
+    : []
+
+  return <ProjectDetailClient project={project} relatedProjects={relatedProjects} />
 }

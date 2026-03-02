@@ -7,9 +7,9 @@ import styles from './Header.module.css'
 import type { ViewMode } from '@/lib/types'
 
 const views: { key: ViewMode; label: string }[] = [
-  { key: 'aleatoire', label: 'Aléatoire' },
-  { key: 'chronologique', label: 'Chronologique' },
-  { key: 'projets', label: 'Projets' },
+  { key: 'aleatoire', label: 'Random' },
+  { key: 'chronologique', label: 'Chronological' },
+  { key: 'projets', label: 'Projects' },
 ]
 
 function HeaderNav() {
@@ -44,15 +44,8 @@ function HeaderNav() {
 export default function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.left}>
-        <div className={styles.firmName}>
-          <Link href="/">Georgi Stanishev & William Parlon</Link>
-        </div>
-        <nav className={styles.pageNav}>
-          <Link href="/a-propos" className={styles.pageLink}>À Propos</Link>
-          <Link href="/journal" className={styles.pageLink}>Journal</Link>
-          <Link href="/contact" className={styles.pageLink}>Contact</Link>
-        </nav>
+      <div className={styles.firmName}>
+        <Link href="/">Georgi Stanishev & William Parlon</Link>
       </div>
       <Suspense>
         <HeaderNav />

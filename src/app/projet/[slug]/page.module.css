@@ -43,6 +43,53 @@
   max-width: 500px;
 }
 
+.relatedSection {
+  padding: 3rem var(--page-padding) 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.relatedTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.relatedGrid {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.relatedCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 200px;
+  transition: opacity 0.2s;
+}
+
+.relatedCard:hover {
+  opacity: 0.6;
+}
+
+.relatedImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.relatedPlaceholder {
+  width: 200px;
+  height: 150px;
+  background: #e8e8e8;
+}
+
+.relatedName {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
 .backLink {
   display: inline-block;
   margin-top: 3rem;

@@ -1,17 +1,20 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel'
 import type { Project } from '@/lib/types'
+import { urlFor } from '../../../../sanity/lib/image'
 import styles from './page.module.css'
 
 interface ProjectDetailClientProps {
   project: Project
+  relatedProjects: Project[]
 }
 
-export default function ProjectDetailClient({ project }: ProjectDetailClientProps) {
+export default function ProjectDetailClient({ project, relatedProjects }: ProjectDetailClientProps) {
   const allImages = [
     ...(project.coverImage ? [project.coverImage] : []),
     ...(project.images || []),
@@ -60,9 +63,51 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           </div>
         </div>
 
+        {relatedProjects.length > 0 && (
+          <div className={styles.relatedSection}>
+            <h2 className={styles.relatedTitle}>
+              {project.category?.title}
+            </h2>
+            <div className={styles.relatedGrid}>
+              {relatedProjects.map((related) => {
+                const hasSanityImage = related.coverImage?.asset?._ref
+                const isGif = hasSanityImage?.endsWith('-gif')
+                const thumbUrl = hasSanityImage
+                  ? isGif
+                    ? urlFor(related.coverImage).url()
+                    : urlFor(related.coverImage).width(400).url()
+                  : null
+
+                return (
+                  <Link
+                    key={related._id}
+                    href={`/projet/${related.slug.current}`}
+                    className={styles.relatedCard}
+                  >
+                    {thumbUrl ? (
+                      <Image
+                        src={thumbUrl}
+                        alt={related.title}
+                        width={200}
+                        height={150}
+                        className={styles.relatedImage}
+                        sizes="(max-width: 768px) 30vw, 200px"
+                        unoptimized={isGif}
+                      />
+                    ) : (
+                      <div className={styles.relatedPlaceholder} />
+                    )}
+                    <span className={styles.relatedName}>{related.title}</span>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
         <div style={{ padding: '0 var(--page-padding)' }}>
           <Link href="/" className={styles.backLink}>
-            &larr; Retour
+            &larr; Back
           </Link>
         </div>
       </div>
