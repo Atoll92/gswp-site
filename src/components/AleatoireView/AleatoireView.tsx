@@ -3,11 +3,12 @@
 import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import styles from './AleatoireView.module.css'
-import ProjectCard from '../ProjectCard/ProjectCard'
+import ScatteredGrid from '../ScatteredGrid/ScatteredGrid'
 import type { Project } from '@/lib/types'
 
 interface AleatoireViewProps {
   projects: Project[]
+  categoryTitle?: string
 }
 
 // Seeded shuffle for consistent randomization per session
@@ -22,10 +23,7 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return shuffled
 }
 
-// Width used to request appropriate resolution from Sanity
-const IMAGE_WIDTH = 600
-
-export default function AleatoireView({ projects }: AleatoireViewProps) {
+export default function AleatoireView({ projects, categoryTitle }: AleatoireViewProps) {
   const shuffled = useMemo(() => {
     const seed = Math.floor(Date.now() / 86400000) // Changes daily
     return seededShuffle(projects, seed)
@@ -39,17 +37,10 @@ export default function AleatoireView({ projects }: AleatoireViewProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className={styles.grid}>
-        {shuffled.map((project) => (
-          <div key={project._id} className={styles.item}>
-            <ProjectCard
-              project={project}
-              width={IMAGE_WIDTH}
-              sizes="(max-width: 768px) 70vw, 40vw"
-            />
-          </div>
-        ))}
-      </div>
+      {categoryTitle && (
+        <h1 className={styles.sectionTitle}>{categoryTitle}</h1>
+      )}
+      <ScatteredGrid projects={shuffled} />
     </motion.div>
   )
 }

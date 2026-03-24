@@ -3,37 +3,32 @@
   min-height: 100vh;
 }
 
-.yearGroup {
-  margin-bottom: 4rem;
-}
-
-.yearLabel {
-  font-size: 0.9rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-  padding-left: 0;
-}
-
-.row {
+.yearNav {
   display: flex;
   gap: 1rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 0.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
-.row::-webkit-scrollbar {
-  display: none;
+.yearNavLink {
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.item {
-  flex: 0 0 auto;
-  width: 280px;
+.yearNavLink:hover {
+  opacity: 0.6;
 }
 
-@media (max-width: 768px) {
-  .item {
-    width: 200px;
-  }
+.yearGroup {
+  margin-bottom: 6rem;
+}
+
+.yearTitle {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 2rem;
 }

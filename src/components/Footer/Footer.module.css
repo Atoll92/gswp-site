@@ -1,30 +1,12 @@
 .footer {
   padding: 4rem var(--page-padding) 2rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.info {
-  max-width: 300px;
-}
-
-.firmName {
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
-}
-
-.subtitle {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  margin-bottom: 0.1rem;
+  justify-content: flex-end;
 }
 
 .nav {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  gap: 1.5rem;
 }
 
 .navLink {
@@ -34,53 +16,5 @@
 }
 
 .navLink:hover {
-  opacity: 0.6;
-}
-
-.creditsWrapper {
-  padding: 2rem var(--page-padding);
-}
-
-.creditsToggle {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.creditsToggle:hover {
-  opacity: 0.6;
-}
-
-.creditsDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
-  margin-top: 0;
-}
-
-.creditsDetails.creditsOpen {
-  max-height: 4rem;
-  opacity: 0.7;
-  margin-top: 0.5rem;
-}
-
-.creditsDetails a {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.2s;
-}
-
-.creditsDetails a:hover {
   opacity: 0.6;
 }

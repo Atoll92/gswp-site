@@ -20,8 +20,14 @@ export async function getProjects(): Promise<Project[]> {
         surface,
         curator,
         description,
+        subtitle,
+        credits,
+        tags,
         coverImage,
-        images,
+        images[] {
+          ...,
+          caption
+        },
         planImage,
         order
       }
@@ -53,8 +59,14 @@ export async function getProject(slug: string): Promise<Project | null> {
         surface,
         curator,
         description,
+        subtitle,
+        credits,
+        tags,
         coverImage,
-        images,
+        images[] {
+          ...,
+          caption
+        },
         planImage,
         order
       }
@@ -117,6 +129,7 @@ export async function getAboutPage(): Promise<AboutPage | null> {
   try {
     return await getClient().fetch(`
       *[_type == "aboutPage" && _id == "aboutPage"][0] {
+        bio,
         content,
         images
       }

@@ -11,6 +11,9 @@ export interface Project {
   surface: string
   curator: string
   description: string
+  subtitle: string
+  credits: string
+  tags: string[]
   coverImage: SanityImage
   images: SanityImage[]
   planImage: SanityImage | null
@@ -40,9 +43,11 @@ export interface SanityImage {
     width: number
   }
   alt?: string
+  caption?: string
 }
 
 export interface AboutPage {
+  bio?: any[]
   content: any[]
   images: SanityImage[]
 }
@@ -63,4 +68,4 @@ export interface SiteSettings {
   phone: string
 }
 
-export type ViewMode = 'aleatoire' | 'chronologique' | 'projets'
+export type ViewMode = 'home' | 'chronologique' | 'typologique' | string

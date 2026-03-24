@@ -32,6 +32,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 1,
     localCover: '/images/projects/figure-libre-1.jpg',
     localImages: [
@@ -58,6 +61,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 2,
     localCover: '/images/projects/the-wall.jpg',
     localImages: [
@@ -81,6 +87,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 3,
     localCover: '/images/projects/culture-market.jpg',
     localImages: [
@@ -103,6 +112,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 4,
     localCover: '/images/projects/hermes-1.jpg',
     localImages: [
@@ -126,6 +138,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 5,
     localCover: '/images/projects/ball-theater.jpg',
     localImages: [
@@ -148,6 +163,9 @@ export const sampleProjects: Project[] = [
     coverImage: placeholder,
     images: [],
     planImage: null,
+    subtitle: '',
+    credits: '',
+    tags: [],
     order: 6,
     localCover: '/images/projects/les-portes.jpg',
     localImages: [

@@ -6,6 +6,13 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'bio',
+      title: 'Bio / Atelier (panneau header)',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Short bio shown in the info panel when clicking the firm name',
+    }),
+    defineField({
       name: 'content',
       title: 'Contenu',
       type: 'array',

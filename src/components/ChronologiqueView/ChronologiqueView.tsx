@@ -1,9 +1,9 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import styles from './ChronologiqueView.module.css'
-import ProjectCard from '../ProjectCard/ProjectCard'
+import ScatteredGrid from '../ScatteredGrid/ScatteredGrid'
 import type { Project } from '@/lib/types'
 
 interface ChronologiqueViewProps {
@@ -23,6 +23,12 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
       .map(([year, items]) => ({ year: Number(year), projects: items }))
   }, [projects])
 
+  const yearRefs = useRef<Record<number, HTMLDivElement | null>>({})
+
+  function scrollToYear(year: number) {
+    yearRefs.current[year]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <motion.div
       className={styles.container}
@@ -31,21 +37,26 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
+      <nav className={styles.yearNav}>
+        {grouped.map(({ year }) => (
+          <button
+            key={year}
+            className={styles.yearNavLink}
+            onClick={() => scrollToYear(year)}
+          >
+            {year}
+          </button>
+        ))}
+      </nav>
+
       {grouped.map(({ year, projects: yearProjects }) => (
-        <div key={year} className={styles.yearGroup}>
-          <div className={styles.yearLabel}>{year}</div>
-          <div className={styles.row}>
-            {yearProjects.map((project) => (
-              <div key={project._id} className={styles.item}>
-                <ProjectCard
-                  project={project}
-                  width={400}
-                  height={280}
-                  sizes="(max-width: 768px) 220px, 380px"
-                />
-              </div>
-            ))}
-          </div>
+        <div
+          key={year}
+          className={styles.yearGroup}
+          ref={(el) => { yearRefs.current[year] = el }}
+        >
+          <h2 className={styles.yearTitle}>{year}</h2>
+          <ScatteredGrid projects={yearProjects} />
         </div>
       ))}
     </motion.div>

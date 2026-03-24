@@ -1,0 +1,89 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: transparent;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 35%;
+  max-width: 450px;
+  background: var(--color-bg);
+  z-index: 99;
+  padding: var(--content-top) var(--page-padding) 2rem;
+  overflow-y: auto;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.firmName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.address {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.contact {
+  font-size: 0.85rem;
+}
+
+.contact a {
+  transition: opacity 0.2s;
+}
+
+.contact a:hover {
+  opacity: 0.6;
+}
+
+.bio {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.bio p {
+  margin-bottom: 0.75rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 2rem;
+}
+
+.navLink {
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: opacity 0.2s;
+}
+
+.navLink:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    width: 85%;
+    max-width: none;
+  }
+}
