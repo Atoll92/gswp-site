@@ -46,27 +46,32 @@ function HeaderNav() {
         Chronological
       </button>
       <span className={styles.navSeparator}>&mdash;</span>
-      <div className={styles.projectsMenu}>
-        <button
-          className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
-          onClick={() => setProjectsOpen(!projectsOpen)}
-        >
-          Projects
-        </button>
-        {projectsOpen && (
-          <div className={styles.subMenu}>
-            {PROJECT_CATEGORIES.map((cat) => (
+      <button
+        className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
+        onClick={() => setProjectsOpen(!projectsOpen)}
+      >
+        Projects
+      </button>
+
+      {/* Inline sub-items after Projects */}
+      {projectsOpen && (
+        <>
+          <span className={styles.navSeparator}>:</span>
+          {PROJECT_CATEGORIES.map((cat, i) => (
+            <span key={cat.key} className={styles.subItemWrap}>
               <button
-                key={cat.key}
-                className={`${styles.subMenuLink} ${currentView === cat.key ? styles.subMenuLinkActive : ''}`}
+                className={`${styles.navLink} ${styles.subItem} ${currentView === cat.key ? styles.navLinkActive : ''}`}
                 onClick={() => handleViewChange(cat.key)}
               >
                 {cat.label}
               </button>
-            ))}
-          </div>
-        )}
-      </div>
+              {i < PROJECT_CATEGORIES.length - 1 && (
+                <span className={styles.navSeparator}>&mdash;</span>
+              )}
+            </span>
+          ))}
+        </>
+      )}
     </nav>
   )
 }
@@ -86,7 +91,7 @@ export default function Header({ bio, settings }: HeaderProps) {
           className={styles.firmName}
           onClick={() => setInfoPanelOpen(!infoPanelOpen)}
         >
-          Georgi William
+          George William
         </button>
         <Suspense>
           <HeaderNav />

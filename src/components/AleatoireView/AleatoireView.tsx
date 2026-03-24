@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import styles from './AleatoireView.module.css'
 import ScatteredGrid from '../ScatteredGrid/ScatteredGrid'
 import type { Project } from '@/lib/types'
@@ -37,9 +37,20 @@ export default function AleatoireView({ projects, categoryTitle }: AleatoireView
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {categoryTitle && (
-        <h1 className={styles.sectionTitle}>{categoryTitle}</h1>
-      )}
+      <AnimatePresence mode="wait">
+        {categoryTitle && (
+          <motion.h1
+            key={categoryTitle}
+            className={styles.sectionTitle}
+            initial={{ opacity: 0, x: 80, clipPath: 'inset(0 0 0 100%)' }}
+            animate={{ opacity: 1, x: 0, clipPath: 'inset(0 0 0 0%)' }}
+            exit={{ opacity: 0, x: 80, clipPath: 'inset(0 0 0 100%)' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {categoryTitle}
+          </motion.h1>
+        )}
+      </AnimatePresence>
       <ScatteredGrid projects={shuffled} />
     </motion.div>
   )
