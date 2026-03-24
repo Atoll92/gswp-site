@@ -9,34 +9,34 @@ import AleatoireView from './AleatoireView/AleatoireView'
 import ChronologiqueView from './ChronologiqueView/ChronologiqueView'
 import type { Project, Category, SiteSettings } from '@/lib/types'
 
-// Hardcoded category keys matching the header menu
+// Category keys matching the header sub-menu (using Sanity category slugs directly)
 const CATEGORY_KEYS = [
-  'temporary-theatres',
-  'interiors',
+  'architecture-theatres',
+  'architecture-interieurs',
   'exhibitions',
   'fashion-shows',
-  'celebrations',
-  'theatre-scenography',
+  'party',
+  'showroom',
 ]
 
 // Map header menu keys to Sanity category slugs
 const CATEGORY_SLUG_MAP: Record<string, string> = {
-  'temporary-theatres': 'architecture-theatres',
-  'interiors': 'architecture-interieurs',
+  'architecture-theatres': 'architecture-theatres',
+  'architecture-interieurs': 'architecture-interieurs',
   'exhibitions': 'expositions',
   'fashion-shows': 'defiles',
-  'celebrations': 'celebrations',
-  'theatre-scenography': 'scenographie-theatre',
+  'party': 'celebrations',
+  'showroom': 'showroom',
 }
 
 // Display names for category large titles
 const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
-  'temporary-theatres': 'Temporary Theatres',
-  'interiors': 'Interiors',
+  'architecture-theatres': 'Architecture [Theaters]',
+  'architecture-interieurs': 'Architecture [Interiors]',
   'exhibitions': 'Exhibitions',
   'fashion-shows': 'Fashion Shows',
-  'celebrations': 'Celebrations',
-  'theatre-scenography': 'Theatre Scenography',
+  'party': 'Party',
+  'showroom': 'Showroom',
 }
 
 interface HomepageClientProps {

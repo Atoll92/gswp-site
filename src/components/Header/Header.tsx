@@ -6,25 +6,20 @@ import styles from './Header.module.css'
 import InfoPanel from '../InfoPanel/InfoPanel'
 import type { SiteSettings } from '@/lib/types'
 
-const MENU_ITEMS = [
-  { key: 'home', label: 'Home' },
-  { key: 'temporary-theatres', label: 'Temporary Theatres' },
-  { key: 'interiors', label: 'Interiors' },
+const PROJECT_CATEGORIES = [
+  { key: 'architecture-theatres', label: 'Architecture [Theaters]' },
+  { key: 'architecture-interieurs', label: 'Architecture [Interiors]' },
   { key: 'exhibitions', label: 'Exhibitions' },
   { key: 'fashion-shows', label: 'Fashion Shows' },
-  { key: 'celebrations', label: 'Celebrations' },
-  { key: 'theatre-scenography', label: 'Theatre Scenography' },
-  { key: 'chronologique', label: 'Chronological' },
+  { key: 'party', label: 'Party' },
+  { key: 'showroom', label: 'Showroom' },
 ]
 
-interface HeaderNavProps {
-  onViewChange?: (key: string) => void
-}
-
-function HeaderNav({ onViewChange }: HeaderNavProps) {
+function HeaderNav() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
+  const [projectsOpen, setProjectsOpen] = useState(false)
 
   const isHome = pathname === '/'
   const currentView = searchParams.get('view') || 'home'
@@ -37,20 +32,41 @@ function HeaderNav({ onViewChange }: HeaderNavProps) {
     } else {
       router.push(`/?view=${key}`, { scroll: false })
     }
-    onViewChange?.(key)
+    setProjectsOpen(false)
   }
+
+  const isCategoryActive = PROJECT_CATEGORIES.some((c) => c.key === currentView)
 
   return (
     <nav className={styles.nav}>
-      {MENU_ITEMS.map((item) => (
+      <button
+        className={`${styles.navLink} ${currentView === 'chronologique' ? styles.navLinkActive : ''}`}
+        onClick={() => handleViewChange('chronologique')}
+      >
+        Chronological
+      </button>
+      <span className={styles.navSeparator}>&mdash;</span>
+      <div className={styles.projectsMenu}>
         <button
-          key={item.key}
-          className={`${styles.navLink} ${currentView === item.key ? styles.navLinkActive : ''}`}
-          onClick={() => handleViewChange(item.key)}
+          className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
+          onClick={() => setProjectsOpen(!projectsOpen)}
         >
-          {item.label}
+          Projects
         </button>
-      ))}
+        {projectsOpen && (
+          <div className={styles.subMenu}>
+            {PROJECT_CATEGORIES.map((cat) => (
+              <button
+                key={cat.key}
+                className={`${styles.subMenuLink} ${currentView === cat.key ? styles.subMenuLinkActive : ''}`}
+                onClick={() => handleViewChange(cat.key)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </nav>
   )
 }
@@ -70,7 +86,7 @@ export default function Header({ bio, settings }: HeaderProps) {
           className={styles.firmName}
           onClick={() => setInfoPanelOpen(!infoPanelOpen)}
         >
-          Georgi Stanishev &middot; William Parlon
+          Georgi William
         </button>
         <Suspense>
           <HeaderNav />
