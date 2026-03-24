@@ -6,27 +6,26 @@ import styles from './Header.module.css'
 import InfoPanel from '../InfoPanel/InfoPanel'
 import type { SiteSettings } from '@/lib/types'
 
-const PROJECT_CATEGORIES = [
-  { key: 'architecture-theatres', label: 'Architecture [Theaters]' },
-  { key: 'architecture-interieurs', label: 'Architecture [Interiors]' },
+const MENU_ITEMS = [
+  { key: 'home', label: 'Home' },
+  { key: 'chronologique', label: 'Chronological' },
+  { key: 'temporary-theatres', label: 'Temporary Theatres' },
+  { key: 'interiors', label: 'Interiors' },
   { key: 'exhibitions', label: 'Exhibitions' },
   { key: 'fashion-shows', label: 'Fashion Shows' },
-  { key: 'party', label: 'Party' },
-  { key: 'showroom', label: 'Showroom' },
+  { key: 'celebrations', label: 'Celebrations' },
+  { key: 'theatre-scenography', label: 'Theatre Scenography' },
 ]
 
 function HeaderNav() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
-  const [projectsOpen, setProjectsOpen] = useState(false)
 
   const isHome = pathname === '/'
   const currentView = searchParams.get('view') || 'home'
 
   if (!isHome) return null
-
-  const isCategoryActive = PROJECT_CATEGORIES.some((c) => c.key === currentView)
 
   function handleViewChange(key: string) {
     if (key === 'home') {
@@ -34,46 +33,24 @@ function HeaderNav() {
     } else {
       router.push(`/?view=${key}`, { scroll: false })
     }
-    // Don't close sub-items when clicking a category
   }
 
   return (
-    <div className={styles.navWrapper}>
-      <nav className={styles.nav}>
-        <button
-          className={`${styles.navLink} ${currentView === 'chronologique' ? styles.navLinkActive : ''}`}
-          onClick={() => handleViewChange('chronologique')}
-        >
-          Chronological
-        </button>
-        <span className={styles.navSeparator}>&mdash;</span>
-        <button
-          className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
-          onClick={() => setProjectsOpen(!projectsOpen)}
-        >
-          Projects
-        </button>
-      </nav>
-
-      {/* Sub-items on second row below main menu */}
-      {(projectsOpen || isCategoryActive) && (
-        <nav className={styles.subNav}>
-          {PROJECT_CATEGORIES.map((cat, i) => (
-            <span key={cat.key} className={styles.subItemWrap}>
-              <button
-                className={`${styles.subItem} ${currentView === cat.key ? styles.subItemActive : ''}`}
-                onClick={() => handleViewChange(cat.key)}
-              >
-                {cat.label}
-              </button>
-              {i < PROJECT_CATEGORIES.length - 1 && (
-                <span className={styles.navSeparator}>&mdash;</span>
-              )}
-            </span>
-          ))}
-        </nav>
-      )}
-    </div>
+    <nav className={styles.nav}>
+      {MENU_ITEMS.map((item, i) => (
+        <span key={item.key} className={styles.navItemWrap}>
+          <button
+            className={`${styles.navLink} ${currentView === item.key ? styles.navLinkActive : ''}`}
+            onClick={() => handleViewChange(item.key)}
+          >
+            {item.label}
+          </button>
+          {i < MENU_ITEMS.length - 1 && (
+            <span className={styles.navSeparator}>/</span>
+          )}
+        </span>
+      ))}
+    </nav>
   )
 }
 

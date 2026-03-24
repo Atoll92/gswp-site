@@ -130,81 +130,100 @@ export default function ProjectCard({
     containerStyle.aspectRatio = `${coverAspectRatio}`
   }
 
+  const hasDescription = Boolean(project.description)
+
   return (
     <div
       className={`${styles.card} ${className} ${hasMultipleSlides ? styles.clickable : ''}`}
       onClick={hasMultipleSlides ? handleClick : undefined}
     >
-      <div className={styles.imageContainer} style={containerStyle}>
-        {currentSlideData?.type === 'credits' ? (
-          <div className={styles.creditsSlide}>
-            <p>{project.credits}</p>
-          </div>
-        ) : currentImageUrl ? (
-          <>
-            <Image
-              src={currentImageUrl}
-              alt={currentSlideData?.image?.alt || project.title}
-              width={width}
-              height={Math.round(width / (coverAspectRatio || 1.5))}
-              className={`${styles.image} ${!isCover && coverAspectRatio ? styles.imageCropped : ''}`}
-              sizes={sizes}
-              unoptimized={isGif}
-            />
-            {currentCaption && (
-              <span className={`${styles.caption} ${showCaption ? styles.captionVisible : ''}`}>
-                {currentCaption}
-              </span>
-            )}
-          </>
-        ) : (
-          <div className={styles.placeholder}>
-            <span className={styles.placeholderTitle}>{project.title}</span>
-          </div>
-        )}
-
-        {hasMultipleSlides && (
-          <div className={styles.dots}>
-            {slides.map((_, i) => (
-              <span
-                key={i}
-                className={`${styles.dot} ${i === currentSlide ? styles.dotActive : ''}`}
+      <div className={`${styles.imageWrapper} ${hasDescription ? styles.imageWrapperWithTitle : ''}`}>
+        <div className={styles.imageContainer} style={containerStyle}>
+          {currentSlideData?.type === 'credits' ? (
+            <div className={styles.creditsSlide}>
+              <p>{project.credits}</p>
+            </div>
+          ) : currentImageUrl ? (
+            <>
+              <Image
+                src={currentImageUrl}
+                alt={currentSlideData?.image?.alt || project.title}
+                width={width}
+                height={Math.round(width / (coverAspectRatio || 1.5))}
+                className={`${styles.image} ${!isCover && coverAspectRatio ? styles.imageCropped : ''}`}
+                sizes={sizes}
+                unoptimized={isGif}
               />
-            ))}
-          </div>
+              {project.subtitle && (
+                <span className={styles.subtitle}>{project.subtitle}</span>
+              )}
+              {currentCaption && (
+                <span className={`${styles.caption} ${showCaption ? styles.captionVisible : ''}`}>
+                  {currentCaption}
+                </span>
+              )}
+            </>
+          ) : (
+            <div className={styles.placeholder}>
+              <span className={styles.placeholderTitle}>{project.title}</span>
+            </div>
+          )}
+
+          {hasMultipleSlides && (
+            <div className={styles.dots}>
+              {slides.map((_, i) => (
+                <span
+                  key={i}
+                  className={`${styles.dot} ${i === currentSlide ? styles.dotActive : ''}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {hasDescription && (
+          <Link href={`/projet/${project.slug.current}`} className={styles.verticalTitle}>
+            {project.title}
+          </Link>
         )}
       </div>
 
-      <div className={styles.info}>
-        <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
-          <span className={styles.infoTitle}>{project.title}</span>
-          {project.venue && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>{project.venue}</span>
-            </>
-          )}
-          {project.location && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>
-                {project.location.split(',')[0]}
-                {project.country && (
-                  <>
-                    , <span className={styles.infoCountry}>{project.country}</span>
-                  </>
-                )}
-              </span>
-            </>
-          )}
-          {project.year && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>{project.year}</span>
-            </>
-          )}
-        </Link>
-      </div>
+      {hasDescription ? (
+        <div className={styles.description}>
+          <p>{project.description}</p>
+        </div>
+      ) : (
+        <div className={styles.info}>
+          <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
+            <span className={styles.infoTitle}>{project.title}</span>
+            {project.venue && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>{project.venue}</span>
+              </>
+            )}
+            {project.location && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>
+                  {project.location.split(',')[0]}
+                  {project.country && (
+                    <>
+                      , <span className={styles.infoCountry}>{project.country}</span>
+                    </>
+                  )}
+                </span>
+              </>
+            )}
+            {project.year && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>{project.year}</span>
+              </>
+            )}
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

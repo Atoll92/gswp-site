@@ -26,6 +26,20 @@
   object-fit: cover;
 }
 
+/* Subtitle / extrait overlay on image */
+.subtitle {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
 /* Vertical caption on hover */
 .caption {
   position: absolute;
@@ -89,11 +103,64 @@
   background: #ffffff;
 }
 
-/* Info text below image */
+/* Image wrapper with optional vertical title */
+.imageWrapper {
+  position: relative;
+}
+
+.imageWrapperWithTitle {
+  display: flex;
+  align-items: stretch;
+}
+
+.verticalTitle {
+  writing-mode: vertical-rl;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: flex-start;
+  padding: 0.25rem 0.2rem;
+  color: var(--color-text);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.card:hover .verticalTitle {
+  opacity: 1;
+}
+
+.verticalTitle:hover {
+  opacity: 0.6;
+}
+
+/* Description below image (hover only) */
+.description {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .description {
+  opacity: 1;
+}
+
+/* Info text below image (hover only) */
 .info {
   margin-top: 0.4rem;
   font-size: 0.7rem;
   line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .info {
+  opacity: 1;
 }
 
 .infoTitle {
