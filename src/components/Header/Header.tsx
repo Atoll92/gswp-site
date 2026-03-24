@@ -26,41 +26,42 @@ function HeaderNav() {
 
   if (!isHome) return null
 
+  const isCategoryActive = PROJECT_CATEGORIES.some((c) => c.key === currentView)
+
   function handleViewChange(key: string) {
     if (key === 'home') {
       router.push('/', { scroll: false })
     } else {
       router.push(`/?view=${key}`, { scroll: false })
     }
-    setProjectsOpen(false)
+    // Don't close sub-items when clicking a category
   }
 
-  const isCategoryActive = PROJECT_CATEGORIES.some((c) => c.key === currentView)
-
   return (
-    <nav className={styles.nav}>
-      <button
-        className={`${styles.navLink} ${currentView === 'chronologique' ? styles.navLinkActive : ''}`}
-        onClick={() => handleViewChange('chronologique')}
-      >
-        Chronological
-      </button>
-      <span className={styles.navSeparator}>&mdash;</span>
-      <button
-        className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
-        onClick={() => setProjectsOpen(!projectsOpen)}
-      >
-        Projects
-      </button>
+    <div className={styles.navWrapper}>
+      <nav className={styles.nav}>
+        <button
+          className={`${styles.navLink} ${currentView === 'chronologique' ? styles.navLinkActive : ''}`}
+          onClick={() => handleViewChange('chronologique')}
+        >
+          Chronological
+        </button>
+        <span className={styles.navSeparator}>&mdash;</span>
+        <button
+          className={`${styles.navLink} ${isCategoryActive || projectsOpen ? styles.navLinkActive : ''}`}
+          onClick={() => setProjectsOpen(!projectsOpen)}
+        >
+          Projects
+        </button>
+      </nav>
 
-      {/* Inline sub-items after Projects */}
-      {projectsOpen && (
-        <>
-          <span className={styles.navSeparator}>:</span>
+      {/* Sub-items on second row below main menu */}
+      {(projectsOpen || isCategoryActive) && (
+        <nav className={styles.subNav}>
           {PROJECT_CATEGORIES.map((cat, i) => (
             <span key={cat.key} className={styles.subItemWrap}>
               <button
-                className={`${styles.navLink} ${styles.subItem} ${currentView === cat.key ? styles.navLinkActive : ''}`}
+                className={`${styles.subItem} ${currentView === cat.key ? styles.subItemActive : ''}`}
                 onClick={() => handleViewChange(cat.key)}
               >
                 {cat.label}
@@ -70,9 +71,9 @@ function HeaderNav() {
               )}
             </span>
           ))}
-        </>
+        </nav>
       )}
-    </nav>
+    </div>
   )
 }
 

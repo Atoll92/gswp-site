@@ -1,29 +1,20 @@
 .container {
   padding: var(--content-top) var(--page-padding) 2rem;
   min-height: 100vh;
-  position: relative;
 }
 
 .sectionTitle {
-  position: fixed;
-  right: var(--page-padding);
-  top: 50%;
-  transform: translateY(-50%);
   font-size: clamp(4rem, 10vw, 9rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 0.9;
   text-align: right;
-  pointer-events: none;
-  z-index: 50;
+  margin-bottom: 2rem;
   color: var(--color-text);
-  mix-blend-mode: difference;
-  max-width: 50vw;
 }
 
 @media (max-width: 768px) {
   .sectionTitle {
     font-size: clamp(2.5rem, 12vw, 5rem);
-    max-width: 70vw;
   }
 }
