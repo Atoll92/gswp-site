@@ -137,6 +137,9 @@ export default function ProjectCard({
       className={`${styles.card} ${className} ${hasMultipleSlides ? styles.clickable : ''}`}
       onClick={hasMultipleSlides ? handleClick : undefined}
     >
+      {project.subtitle && (
+        <div className={styles.subtitle}>{project.subtitle}</div>
+      )}
       <div className={`${styles.imageWrapper} ${hasDescription ? styles.imageWrapperWithTitle : ''}`}>
         <div className={styles.imageContainer} style={containerStyle}>
           {currentSlideData?.type === 'credits' ? (
@@ -154,9 +157,6 @@ export default function ProjectCard({
                 sizes={sizes}
                 unoptimized={isGif}
               />
-              {project.subtitle && (
-                <span className={styles.subtitle}>{project.subtitle}</span>
-              )}
               {currentCaption && (
                 <span className={`${styles.caption} ${showCaption ? styles.captionVisible : ''}`}>
                   {currentCaption}

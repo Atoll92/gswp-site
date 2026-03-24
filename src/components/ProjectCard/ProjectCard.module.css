@@ -26,18 +26,13 @@
   object-fit: cover;
 }
 
-/* Subtitle / extrait overlay on image */
+/* Subtitle / extrait above image */
 .subtitle {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  right: 0.75rem;
   font-size: clamp(1rem, 2.5vw, 1.6rem);
   font-weight: 400;
   line-height: 1.15;
-  color: #fff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
+  color: var(--color-text);
+  margin-bottom: 0.4rem;
 }
 
 /* Vertical caption on hover */
