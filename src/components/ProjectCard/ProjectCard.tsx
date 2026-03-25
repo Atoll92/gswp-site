@@ -180,48 +180,59 @@ export default function ProjectCard({
         </div>
 
         {hasDescription && (
-          <Link href={`/projet/${project.slug.current}`} className={styles.verticalTitle}>
-            {project.title}
-          </Link>
+          <div className={styles.sidePanel}>
+            <Link href={`/projet/${project.slug.current}`} className={styles.sidePanelTitle}>
+              {project.title}
+            </Link>
+            <div className={styles.sidePanelDescription}>
+              <p>{project.description}</p>
+            </div>
+            <div className={styles.sidePanelInfo}>
+              {project.venue && <span>{project.venue}</span>}
+              {project.location && (
+                <span>
+                  {project.location.split(',')[0]}
+                  {project.country && `, ${project.country}`}
+                </span>
+              )}
+              {project.year && <span>{project.year}</span>}
+            </div>
+          </div>
         )}
       </div>
 
-      {hasDescription && (
-        <div className={styles.description}>
-          <p>{project.description}</p>
+      {!hasDescription && (
+        <div className={styles.info}>
+          <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
+            <span className={styles.infoTitle}>{project.title}</span>
+            {project.venue && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>{project.venue}</span>
+              </>
+            )}
+            {project.location && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>
+                  {project.location.split(',')[0]}
+                  {project.country && (
+                    <>
+                      , <span className={styles.infoCountry}>{project.country}</span>
+                    </>
+                  )}
+                </span>
+              </>
+            )}
+            {project.year && (
+              <>
+                {' \u2014 '}
+                <span className={styles.infoDetail}>{project.year}</span>
+              </>
+            )}
+          </Link>
         </div>
       )}
-
-      <div className={styles.info}>
-        <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
-          <span className={styles.infoTitle}>{project.title}</span>
-          {project.venue && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>{project.venue}</span>
-            </>
-          )}
-          {project.location && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>
-                {project.location.split(',')[0]}
-                {project.country && (
-                  <>
-                    , <span className={styles.infoCountry}>{project.country}</span>
-                  </>
-                )}
-              </span>
-            </>
-          )}
-          {project.year && (
-            <>
-              {' \u2014 '}
-              <span className={styles.infoDetail}>{project.year}</span>
-            </>
-          )}
-        </Link>
-      </div>
     </div>
   )
 }
