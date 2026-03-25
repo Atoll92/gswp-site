@@ -180,21 +180,18 @@ export default function ProjectCard({
         </div>
 
         {hasDescription && (
-          <div className={styles.sidePanel}>
-            <Link href={`/projet/${project.slug.current}`} className={styles.sidePanelTitle}>
-              {project.title}
-            </Link>
-            <div className={styles.sidePanelInfo}>
-              {project.venue && <span>{project.venue}</span>}
-              {project.location && (
-                <span>
-                  {project.location.split(',')[0]}
-                  {project.country && `, ${project.country}`}
-                </span>
-              )}
-              {project.year && <span>{project.year}</span>}
-            </div>
-          </div>
+          <Link href={`/projet/${project.slug.current}`} className={styles.verticalInfo}>
+            <span className={styles.verticalInfoTitle}>{project.title}</span>
+            {project.venue && <span> — {project.venue}</span>}
+            {project.location && (
+              <span>
+                {' — '}
+                {project.location.split(',')[0]}
+                {project.country && `, ${project.country}`}
+              </span>
+            )}
+            {project.year && <span> — {project.year}</span>}
+          </Link>
         )}
       </div>
 

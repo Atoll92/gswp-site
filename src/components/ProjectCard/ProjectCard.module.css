@@ -109,7 +109,7 @@
   background: #ffffff;
 }
 
-/* Image wrapper with optional side panel */
+/* Image wrapper with optional vertical title */
 .imageWrapper {
   position: relative;
 }
@@ -117,46 +117,32 @@
 .imageWrapperWithTitle {
   display: flex;
   align-items: stretch;
-  gap: 0.5rem;
 }
 
-/* Side panel: title + info, displayed beside image on hover */
-.sidePanel {
+.verticalInfo {
+  writing-mode: vertical-rl;
+  font-size: 0.65rem;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-width: 0;
-  flex-shrink: 0;
-  width: clamp(100px, 15vw, 180px);
-  font-size: 0.7rem;
-  line-height: 1.4;
+  align-items: flex-start;
+  padding: 0.25rem 0.2rem;
   color: var(--color-text);
   opacity: 0;
   transition: opacity 0.3s ease;
+  white-space: nowrap;
 }
 
-.card:hover .sidePanel {
-  opacity: 1;
-}
-
-.sidePanelTitle {
+.verticalInfoTitle {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin-bottom: 0.4rem;
-  transition: opacity 0.2s;
 }
 
-.sidePanelTitle:hover {
+.card:hover .verticalInfo {
+  opacity: 1;
+}
+
+.verticalInfo:hover {
   opacity: 0.6;
-}
-
-.sidePanelInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  font-size: 0.65rem;
-  color: var(--color-muted, #666);
 }
 
 /* Description below image (always visible) */
