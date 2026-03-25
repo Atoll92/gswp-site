@@ -1,29 +1,29 @@
 @font-face {
-  font-family: 'OverusedGrotesk';
-  src: url('/fonts/OverusedGrotesk-Regular.otf') format('opentype');
+  font-family: 'UncutSans';
+  src: url('/fonts/UncutSans-Book.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OverusedGrotesk';
-  src: url('/fonts/OverusedGrotesk-SemiBold.otf') format('opentype');
-  font-weight: 600;
+  font-family: 'UncutSans';
+  src: url('/fonts/UncutSans-Medium.otf') format('opentype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OverusedGrotesk';
-  src: url('/fonts/OverusedGrotesk-Bold.otf') format('opentype');
+  font-family: 'UncutSans';
+  src: url('/fonts/UncutSans-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --font-main: 'OverusedGrotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-main: 'UncutSans', 'Helvetica Neue', Arial, sans-serif;
   --color-bg: #ffffff;
   --color-text: #000000;
   --color-overlay: rgba(0, 0, 0, 0.85);
