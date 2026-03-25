@@ -184,9 +184,6 @@ export default function ProjectCard({
             <Link href={`/projet/${project.slug.current}`} className={styles.sidePanelTitle}>
               {project.title}
             </Link>
-            <div className={styles.sidePanelDescription}>
-              <p>{project.description}</p>
-            </div>
             <div className={styles.sidePanelInfo}>
               {project.venue && <span>{project.venue}</span>}
               {project.location && (
@@ -200,6 +197,12 @@ export default function ProjectCard({
           </div>
         )}
       </div>
+
+      {hasDescription && (
+        <div className={styles.description}>
+          <p>{project.description}</p>
+        </div>
+      )}
 
       {!hasDescription && (
         <div className={styles.info}>
