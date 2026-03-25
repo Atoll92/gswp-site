@@ -74,10 +74,8 @@ export default function ProjectCard({
       }
     }
 
-    // Last slide: credits
-    if (project.credits) {
-      result.push({ type: 'credits' })
-    }
+    // Last slide: always show credits/info
+    result.push({ type: 'credits' })
 
     return result
   }, [project])
@@ -144,7 +142,16 @@ export default function ProjectCard({
         <div className={styles.imageContainer} style={containerStyle}>
           {currentSlideData?.type === 'credits' ? (
             <div className={styles.creditsSlide}>
-              <p>{project.credits}</p>
+              <p className={styles.creditsTitle}>{project.title}</p>
+              {project.venue && <p>{project.venue}</p>}
+              {project.location && (
+                <p>
+                  {project.location.split(',')[0]}
+                  {project.country && `, ${project.country}`}
+                </p>
+              )}
+              {project.year && <p>{project.year}</p>}
+              {project.credits && <p className={styles.creditsText}>{project.credits}</p>}
             </div>
           ) : currentImageUrl ? (
             <>
@@ -169,16 +176,7 @@ export default function ProjectCard({
             </div>
           )}
 
-          {hasMultipleSlides && (
-            <div className={styles.dots}>
-              {slides.map((_, i) => (
-                <span
-                  key={i}
-                  className={`${styles.dot} ${i === currentSlide ? styles.dotActive : ''}`}
-                />
-              ))}
-            </div>
-          )}
+          {/* dots removed */}
         </div>
 
         {hasDescription && (
@@ -188,42 +186,42 @@ export default function ProjectCard({
         )}
       </div>
 
-      {hasDescription ? (
+      {hasDescription && (
         <div className={styles.description}>
           <p>{project.description}</p>
         </div>
-      ) : (
-        <div className={styles.info}>
-          <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
-            <span className={styles.infoTitle}>{project.title}</span>
-            {project.venue && (
-              <>
-                {' \u2014 '}
-                <span className={styles.infoDetail}>{project.venue}</span>
-              </>
-            )}
-            {project.location && (
-              <>
-                {' \u2014 '}
-                <span className={styles.infoDetail}>
-                  {project.location.split(',')[0]}
-                  {project.country && (
-                    <>
-                      , <span className={styles.infoCountry}>{project.country}</span>
-                    </>
-                  )}
-                </span>
-              </>
-            )}
-            {project.year && (
-              <>
-                {' \u2014 '}
-                <span className={styles.infoDetail}>{project.year}</span>
-              </>
-            )}
-          </Link>
-        </div>
       )}
+
+      <div className={styles.info}>
+        <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
+          <span className={styles.infoTitle}>{project.title}</span>
+          {project.venue && (
+            <>
+              {' \u2014 '}
+              <span className={styles.infoDetail}>{project.venue}</span>
+            </>
+          )}
+          {project.location && (
+            <>
+              {' \u2014 '}
+              <span className={styles.infoDetail}>
+                {project.location.split(',')[0]}
+                {project.country && (
+                  <>
+                    , <span className={styles.infoCountry}>{project.country}</span>
+                  </>
+                )}
+              </span>
+            </>
+          )}
+          {project.year && (
+            <>
+              {' \u2014 '}
+              <span className={styles.infoDetail}>{project.year}</span>
+            </>
+          )}
+        </Link>
+      </div>
     </div>
   )
 }

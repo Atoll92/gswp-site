@@ -69,7 +69,7 @@ export default function Header({ bio, settings }: HeaderProps) {
           className={styles.firmName}
           onClick={() => setInfoPanelOpen(!infoPanelOpen)}
         >
-          George William
+          George · William
         </button>
         <Suspense>
           <HeaderNav />
