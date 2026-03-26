@@ -11,23 +11,10 @@
 
 .item {
   float: left;
-  margin: 5px;
+  margin: 15px 5px;
   max-width: 100%;
   overflow: hidden;
   position: relative;
-}
-
-.extractItem {
-  display: flex;
-  align-items: flex-start;
-}
-
-.extractText {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.2;
-  max-width: 100%;
-  padding: 1rem 0;
 }
 
 @media (max-width: 768px) {

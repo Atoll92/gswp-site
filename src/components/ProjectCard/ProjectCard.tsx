@@ -139,44 +139,50 @@ export default function ProjectCard({
         <div className={styles.subtitle}>{project.subtitle}</div>
       )}
       <div className={`${styles.imageWrapper} ${hasDescription ? styles.imageWrapperWithTitle : ''}`}>
-        <div className={styles.imageContainer} style={containerStyle}>
-          {currentSlideData?.type === 'credits' ? (
-            <div className={styles.creditsSlide}>
-              <p className={styles.creditsTitle}>{project.title}</p>
-              {project.venue && <p>{project.venue}</p>}
-              {project.location && (
-                <p>
-                  {project.location.split(',')[0]}
-                  {project.country && `, ${project.country}`}
-                </p>
-              )}
-              {project.year && <p>{project.year}</p>}
-              {project.credits && <p className={styles.creditsText}>{project.credits}</p>}
-            </div>
-          ) : currentImageUrl ? (
-            <>
-              <Image
-                src={currentImageUrl}
-                alt={currentSlideData?.image?.alt || project.title}
-                width={width}
-                height={Math.round(width / (coverAspectRatio || 1.5))}
-                className={`${styles.image} ${!isCover && coverAspectRatio ? styles.imageCropped : ''}`}
-                sizes={sizes}
-                unoptimized={isGif}
-              />
-              {currentCaption && (
-                <span className={`${styles.caption} ${showCaption ? styles.captionVisible : ''}`}>
-                  {currentCaption}
-                </span>
-              )}
-            </>
-          ) : (
-            <div className={styles.placeholder}>
-              <span className={styles.placeholderTitle}>{project.title}</span>
+        <div className={styles.imageColumn}>
+          <div className={styles.imageContainer} style={containerStyle}>
+            {currentSlideData?.type === 'credits' ? (
+              <div className={styles.creditsSlide}>
+                <p className={styles.creditsTitle}>{project.title}</p>
+                {project.venue && <p>{project.venue}</p>}
+                {project.location && (
+                  <p>
+                    {project.location.split(',')[0]}
+                    {project.country && `, ${project.country}`}
+                  </p>
+                )}
+                {project.year && <p>{project.year}</p>}
+                {project.credits && <p className={styles.creditsText}>{project.credits}</p>}
+              </div>
+            ) : currentImageUrl ? (
+              <>
+                <Image
+                  src={currentImageUrl}
+                  alt={currentSlideData?.image?.alt || project.title}
+                  width={width}
+                  height={Math.round(width / (coverAspectRatio || 1.5))}
+                  className={`${styles.image} ${!isCover && coverAspectRatio ? styles.imageCropped : ''}`}
+                  sizes={sizes}
+                  unoptimized={isGif}
+                />
+                {currentCaption && (
+                  <span className={`${styles.caption} ${showCaption ? styles.captionVisible : ''}`}>
+                    {currentCaption}
+                  </span>
+                )}
+              </>
+            ) : (
+              <div className={styles.placeholder}>
+                <span className={styles.placeholderTitle}>{project.title}</span>
+              </div>
+            )}
+          </div>
+
+          {hasDescription && (
+            <div className={styles.description}>
+              <p>{project.description}</p>
             </div>
           )}
-
-          {/* dots removed */}
         </div>
 
         {hasDescription && (
@@ -194,12 +200,6 @@ export default function ProjectCard({
           </Link>
         )}
       </div>
-
-      {hasDescription && (
-        <div className={styles.description}>
-          <p>{project.description}</p>
-        </div>
-      )}
 
       {!hasDescription && (
         <div className={styles.info}>

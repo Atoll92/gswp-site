@@ -1,6 +1,5 @@
 'use client'
 
-import { Fragment } from 'react'
 import styles from './ScatteredGrid.module.css'
 import ProjectCard from '../ProjectCard/ProjectCard'
 import type { Project } from '@/lib/types'
@@ -26,7 +25,7 @@ export default function ScatteredGrid({
         const itemWidth = WIDTHS[widthIndex % WIDTHS.length]
         widthIndex++
 
-        const elements = [
+        return (
           <div
             key={project._id}
             className={styles.item}
@@ -37,24 +36,8 @@ export default function ScatteredGrid({
               width={imageWidth}
               sizes={sizes}
             />
-          </div>,
-        ]
-
-        if (project.subtitle) {
-          const extractWidth = WIDTHS[widthIndex % WIDTHS.length]
-          widthIndex++
-          elements.push(
-            <div
-              key={`${project._id}-extract`}
-              className={`${styles.item} ${styles.extractItem}`}
-              style={{ width: `${extractWidth}px` }}
-            >
-              <p className={styles.extractText}>{project.subtitle}</p>
-            </div>
-          )
-        }
-
-        return <Fragment key={project._id}>{elements}</Fragment>
+          </div>
+        )
       })}
     </div>
   )

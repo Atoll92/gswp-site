@@ -82,7 +82,7 @@ export default function HomepageClient({
           )}
         </AnimatePresence>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   )
 }
