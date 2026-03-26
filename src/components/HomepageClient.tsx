@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
 import Header from './Header/Header'
@@ -65,24 +65,47 @@ export default function HomepageClient({
 
   const categoryTitle = isCategory ? CATEGORY_DISPLAY_NAMES[view] : undefined
 
+  const footerRef = useRef<HTMLDivElement>(null)
+  const [footerHeight, setFooterHeight] = useState(0)
+
+  useEffect(() => {
+    if (!footerRef.current) return
+    const observer = new ResizeObserver(([entry]) => {
+      setFooterHeight(entry.contentRect.height)
+    })
+    observer.observe(footerRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
-      <Header bio={aboutBio} settings={settings} />
-      <main>
-        <AnimatePresence mode="wait">
-          {(view === 'home' || isCategory) && (
-            <AleatoireView
-              key={view}
-              projects={filteredProjects}
-              categoryTitle={categoryTitle}
-            />
-          )}
-          {view === 'chronologique' && (
-            <ChronologiqueView key="chronologique" projects={projects} />
-          )}
-        </AnimatePresence>
-      </main>
-      <Footer settings={settings} />
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          background: 'var(--color-bg)',
+          marginBottom: footerHeight,
+        }}
+      >
+        <Header bio={aboutBio} settings={settings} />
+        <main>
+          <AnimatePresence mode="wait">
+            {(view === 'home' || isCategory) && (
+              <AleatoireView
+                key={view}
+                projects={filteredProjects}
+                categoryTitle={categoryTitle}
+              />
+            )}
+            {view === 'chronologique' && (
+              <ChronologiqueView key="chronologique" projects={projects} />
+            )}
+          </AnimatePresence>
+        </main>
+      </div>
+      <div ref={footerRef}>
+        <Footer settings={settings} />
+      </div>
     </>
   )
 }
