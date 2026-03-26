@@ -1,38 +1,20 @@
 .grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 0.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
 .item {
+  float: left;
+  margin: 5px;
+  max-width: 100%;
+  overflow: hidden;
   position: relative;
-}
-
-/* Position classes for scattered layout (used instead of nth-child to handle mixed content) */
-.pos0 {
-  grid-column: 1 / span 5;
-}
-
-.pos1 {
-  grid-column: 7 / span 4;
-}
-
-.pos2 {
-  grid-column: 8 / span 5;
-}
-
-.pos3 {
-  grid-column: 2 / span 5;
-}
-
-.pos4 {
-  grid-column: 1 / span 4;
-}
-
-.pos5 {
-  grid-column: 6 / span 5;
 }
 
 .extractItem {
@@ -45,34 +27,13 @@
   font-weight: 400;
   line-height: 1.2;
   max-width: 100%;
+  padding: 1rem 0;
 }
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .pos0 {
-    grid-column: 1 / span 4;
-  }
-
-  .pos1 {
-    grid-column: 3 / span 4;
-  }
-
-  .pos2 {
-    grid-column: 1 / span 5;
-  }
-
-  .pos3 {
-    grid-column: 2 / span 4;
-  }
-
-  .pos4 {
-    grid-column: 1 / span 4;
-  }
-
-  .pos5 {
-    grid-column: 2 / span 5;
+  .item {
+    float: none;
+    width: 100% !important;
+    margin: 5px 0;
   }
 }

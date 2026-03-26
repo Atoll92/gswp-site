@@ -1,6 +1,12 @@
 .container {
-  padding: var(--content-top) var(--page-padding) 2rem;
+  padding: var(--content-top) 25px 120px 90px;
   min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--content-top) 25px 60px;
+  }
 }
 
 .sectionTitle {
