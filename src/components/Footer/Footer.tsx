@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import Link from 'next/link'
 import styles from './Footer.module.css'
 import type { SiteSettings } from '@/lib/types'
@@ -6,9 +7,9 @@ interface FooterProps {
   settings?: SiteSettings | null
 }
 
-export default function Footer({ settings }: FooterProps) {
+const Footer = forwardRef<HTMLElement, FooterProps>(function Footer({ settings }, ref) {
   return (
-    <footer className={styles.footer}>
+    <footer ref={ref} className={styles.footer}>
       <div className={styles.info}>
         <div className={styles.address}>
           {settings?.address ? (
@@ -33,4 +34,6 @@ export default function Footer({ settings }: FooterProps) {
       </nav>
     </footer>
   )
-}
+})
+
+export default Footer

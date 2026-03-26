@@ -65,15 +65,16 @@ export default function HomepageClient({
 
   const categoryTitle = isCategory ? CATEGORY_DISPLAY_NAMES[view] : undefined
 
-  const footerRef = useRef<HTMLDivElement>(null)
+  const footerRef = useRef<HTMLElement>(null)
   const [footerHeight, setFooterHeight] = useState(0)
 
   useEffect(() => {
-    if (!footerRef.current) return
-    const observer = new ResizeObserver(([entry]) => {
-      setFooterHeight(entry.contentRect.height)
-    })
-    observer.observe(footerRef.current)
+    const el = footerRef.current
+    if (!el) return
+    const measure = () => setFooterHeight(el.getBoundingClientRect().height)
+    measure()
+    const observer = new ResizeObserver(() => measure())
+    observer.observe(el)
     return () => observer.disconnect()
   }, [])
 
@@ -103,9 +104,7 @@ export default function HomepageClient({
           </AnimatePresence>
         </main>
       </div>
-      <div ref={footerRef}>
-        <Footer settings={settings} />
-      </div>
+      <Footer ref={footerRef} settings={settings} />
     </>
   )
 }
