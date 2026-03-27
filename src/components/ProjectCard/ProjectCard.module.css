@@ -30,7 +30,7 @@
 /* Subtitle / extrait above image */
 .subtitle {
   font-size: clamp(1rem, 2.5vw, 1.6rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.15;
   color: var(--color-text);
   margin-bottom: 0.4rem;
@@ -127,7 +127,7 @@
 
 .verticalInfo {
   writing-mode: vertical-rl;
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: flex-start;
   padding: 0.25rem 0.2rem;
@@ -138,7 +138,7 @@
 }
 
 .verticalInfoTitle {
-  font-weight: 400;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -162,7 +162,7 @@
 /* Info text below image (hover only) */
 .info {
   margin-top: 0.4rem;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   line-height: 1.4;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -173,7 +173,7 @@
 }
 
 .infoTitle {
-  font-weight: 400;
+  font-weight: 500;
   text-transform: uppercase;
 }
 
