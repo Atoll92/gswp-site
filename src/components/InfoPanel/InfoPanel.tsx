@@ -32,9 +32,6 @@ export default function InfoPanel({ isOpen, onClose, bio, settings }: InfoPanelP
             transition={{ type: 'tween', duration: 0.3 }}
           >
             <div className={styles.content}>
-              <div className={styles.firmName}>
-                Georgi Stanishev &middot; William Parlon
-              </div>
               <div className={styles.subtitle}>Atelier Architecture Scénographie</div>
 
               {settings?.address && (
