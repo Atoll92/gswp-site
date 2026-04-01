@@ -36,6 +36,25 @@
   margin-bottom: 0.4rem;
 }
 
+/* Text-only card */
+.textOnly {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 0;
+}
+
+.textOnlyTitle {
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-text);
+  transition: opacity 0.2s;
+}
+
+.textOnlyTitle:hover {
+  opacity: 0.6;
+}
+
 /* Vertical caption on hover */
 .caption {
   position: absolute;
@@ -62,14 +81,14 @@
   opacity: 1;
 }
 
-/* Credits slide — clear background, centered like kerez.ch */
+/* Credits slide — top left aligned */
 .creditsSlide {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem 1rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  padding: 1.2rem 1rem;
   background: #fff;
   color: var(--color-text);
   font-size: 0.75rem;
@@ -110,12 +129,8 @@
   background: #ffffff;
 }
 
-/* Image wrapper with optional vertical title */
-.imageWrapper {
-  position: relative;
-}
-
-.imageWrapperWithTitle {
+/* Portrait: image + vertical info side by side */
+.imageWrapperPortrait {
   display: flex;
   align-items: stretch;
 }
@@ -151,21 +166,16 @@
   opacity: 0.6;
 }
 
-/* Description below image (always visible) */
-.description {
-  margin-top: 0.4rem;
-  font-size: 0.7rem;
-  line-height: 1.5;
-  color: var(--color-text);
-}
-
-/* Info text below image (hover only) */
+/* Horizontal info text below image (landscape, hover only) */
 .info {
   margin-top: 0.4rem;
   font-size: 0.85rem;
   line-height: 1.4;
   opacity: 0;
   transition: opacity 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card:hover .info {
@@ -187,12 +197,6 @@
 
 .infoLink:hover {
   opacity: 0.6;
-}
-
-.infoCountry {
-  font-variant: small-caps;
-  text-transform: lowercase;
-  letter-spacing: 0.05em;
 }
 
 /* Placeholder */

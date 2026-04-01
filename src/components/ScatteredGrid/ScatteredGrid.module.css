@@ -11,7 +11,7 @@
 
 .item {
   float: left;
-  margin: 15px 5px;
+  margin: 22px 12px;
   max-width: 100%;
   overflow: hidden;
   position: relative;
@@ -21,6 +21,6 @@
   .item {
     float: none;
     width: 100% !important;
-    margin: 5px 0;
+    margin: 10px 0;
   }
 }

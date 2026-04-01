@@ -11,9 +11,21 @@
 
 .yearNav {
   display: flex;
-  gap: 1rem;
+  gap: 0.3rem;
   margin-bottom: 3rem;
   flex-wrap: wrap;
+}
+
+.yearNavItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.yearSeparator {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  user-select: none;
 }
 
 .yearNavLink {
@@ -27,14 +39,10 @@
   opacity: 0.6;
 }
 
-.yearGroup {
-  margin-bottom: 6rem;
+.yearNavLinkActive {
+  font-weight: 700;
 }
 
-.yearTitle {
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 2rem;
+.yearGroup {
+  margin-bottom: 3rem;
 }

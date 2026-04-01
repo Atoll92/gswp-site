@@ -46,7 +46,7 @@ function HeaderNav() {
             {item.label}
           </button>
           {i < MENU_ITEMS.length - 1 && (
-            <span className={styles.navSeparator}>/</span>
+            <span className={styles.navSeparator}>·</span>
           )}
         </span>
       ))}

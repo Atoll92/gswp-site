@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import styles from './ChronologiqueView.module.css'
 import ScatteredGrid from '../ScatteredGrid/ScatteredGrid'
@@ -11,6 +11,8 @@ interface ChronologiqueViewProps {
 }
 
 export default function ChronologiqueView({ projects }: ChronologiqueViewProps) {
+  const [visibleYear, setVisibleYear] = useState<number | null>(null)
+
   const grouped = useMemo(() => {
     const groups: Record<number, Project[]> = {}
     for (const project of projects) {
@@ -25,6 +27,26 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
 
   const yearRefs = useRef<Record<number, HTMLDivElement | null>>({})
 
+  // Track which year section is currently in view
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+    for (const { year } of grouped) {
+      const el = yearRefs.current[year]
+      if (!el) continue
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleYear(year)
+          }
+        },
+        { rootMargin: '-20% 0px -60% 0px' }
+      )
+      observer.observe(el)
+      observers.push(observer)
+    }
+    return () => observers.forEach((o) => o.disconnect())
+  }, [grouped])
+
   function scrollToYear(year: number) {
     yearRefs.current[year]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -38,14 +60,20 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
       transition={{ duration: 0.4 }}
     >
       <nav className={styles.yearNav}>
-        {grouped.map(({ year }) => (
-          <button
-            key={year}
-            className={styles.yearNavLink}
-            onClick={() => scrollToYear(year)}
-          >
-            {year}
-          </button>
+        {grouped.map(({ year }, i) => (
+          <span key={year} className={styles.yearNavItem}>
+            <button
+              className={`${styles.yearNavLink} ${
+                visibleYear === year ? styles.yearNavLinkActive : ''
+              }`}
+              onClick={() => scrollToYear(year)}
+            >
+              {year}
+            </button>
+            {i < grouped.length - 1 && (
+              <span className={styles.yearSeparator}>·</span>
+            )}
+          </span>
         ))}
       </nav>
 
@@ -55,7 +83,6 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
           className={styles.yearGroup}
           ref={(el) => { yearRefs.current[year] = el }}
         >
-          <h2 className={styles.yearTitle}>{year}</h2>
           <ScatteredGrid projects={yearProjects} />
         </div>
       ))}

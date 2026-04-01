@@ -1,12 +1,13 @@
 'use client'
 
-import { useMemo, useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import AleatoireView from './AleatoireView/AleatoireView'
 import ChronologiqueView from './ChronologiqueView/ChronologiqueView'
+import ProjetsView from './ProjetsView/ProjetsView'
 import type { Project, Category, SiteSettings } from '@/lib/types'
 
 // Category keys matching the flat header menu
@@ -29,16 +30,6 @@ const CATEGORY_SLUG_MAP: Record<string, string> = {
   'theatre-scenography': 'scenographie-theatre',
 }
 
-// Display names for category large titles
-const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
-  'temporary-theatres': 'Temporary Theatres',
-  'interiors': 'Interiors',
-  'exhibitions': 'Exhibitions',
-  'fashion-shows': 'Fashion Shows',
-  'celebrations': 'Celebrations',
-  'theatre-scenography': 'Theatre Scenography',
-}
-
 interface HomepageClientProps {
   projects: Project[]
   categories: Category[]
@@ -56,14 +47,7 @@ export default function HomepageClient({
   const view = searchParams.get('view') || 'home'
 
   const isCategory = CATEGORY_KEYS.includes(view)
-
-  const filteredProjects = useMemo(() => {
-    if (!isCategory) return projects
-    const sanitySlug = CATEGORY_SLUG_MAP[view]
-    return projects.filter((p) => p.category?.slug?.current === sanitySlug)
-  }, [projects, view, isCategory])
-
-  const categoryTitle = isCategory ? CATEGORY_DISPLAY_NAMES[view] : undefined
+  const initialCategorySlug = isCategory ? CATEGORY_SLUG_MAP[view] : undefined
 
   const footerRef = useRef<HTMLElement>(null)
   const [footerHeight, setFooterHeight] = useState(0)
@@ -91,11 +75,18 @@ export default function HomepageClient({
         <Header bio={aboutBio} settings={settings} />
         <main>
           <AnimatePresence mode="wait">
-            {(view === 'home' || isCategory) && (
+            {view === 'home' && (
               <AleatoireView
-                key={view}
-                projects={filteredProjects}
-                categoryTitle={categoryTitle}
+                key="home"
+                projects={projects}
+              />
+            )}
+            {isCategory && (
+              <ProjetsView
+                key="categories"
+                projects={projects}
+                categories={categories}
+                initialCategorySlug={initialCategorySlug}
               />
             )}
             {view === 'chronologique' && (

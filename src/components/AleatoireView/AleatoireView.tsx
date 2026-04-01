@@ -37,17 +37,6 @@ export default function AleatoireView({ projects, categoryTitle }: AleatoireView
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {categoryTitle && (
-        <motion.h1
-          key={categoryTitle}
-          className={styles.sectionTitle}
-          initial={{ opacity: 0, clipPath: 'inset(0 0 0 100%)' }}
-          animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {categoryTitle}
-        </motion.h1>
-      )}
       <ScatteredGrid projects={shuffled} />
     </motion.div>
   )
