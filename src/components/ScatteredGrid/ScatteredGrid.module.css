@@ -1,26 +1,29 @@
 .grid {
-  position: relative;
-  overflow: hidden;
-}
-
-.grid::after {
-  content: '';
-  display: table;
-  clear: both;
+  column-count: 3;
+  column-gap: 24px;
 }
 
 .item {
-  float: left;
-  margin: 22px 12px;
-  max-width: 100%;
+  break-inside: avoid;
+  margin-bottom: 28px;
   overflow: hidden;
   position: relative;
 }
 
+@media (max-width: 1200px) {
+  .grid {
+    column-count: 2;
+    column-gap: 20px;
+  }
+}
+
 @media (max-width: 768px) {
+  .grid {
+    column-count: 1;
+    column-gap: 0;
+  }
+
   .item {
-    float: none;
-    width: 100% !important;
-    margin: 10px 0;
+    margin-bottom: 16px;
   }
 }

@@ -10,10 +10,17 @@
 }
 
 .yearNav {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 50;
   display: flex;
   gap: 0.3rem;
   margin-bottom: 3rem;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem 0;
 }
 
 .yearNavItem {
