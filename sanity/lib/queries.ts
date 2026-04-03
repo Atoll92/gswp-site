@@ -123,6 +123,21 @@ export async function getCategories(): Promise<Category[]> {
   }
 }
 
+export async function getHomeOrder(): Promise<string[]> {
+  if (!isSanityConfigured) return []
+
+  try {
+    const result = await getClient().fetch(`
+      *[_type == "homePage" && _id == "homePage"][0] {
+        "projectIds": projects[]._ref
+      }
+    `)
+    return result?.projectIds || []
+  } catch {
+    return []
+  }
+}
+
 export async function getAboutPage(): Promise<AboutPage | null> {
   if (!isSanityConfigured) return null
 

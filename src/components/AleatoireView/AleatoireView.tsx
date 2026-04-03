@@ -8,7 +8,7 @@ import type { Project } from '@/lib/types'
 
 interface AleatoireViewProps {
   projects: Project[]
-  categoryTitle?: string
+  ordered?: boolean
 }
 
 // Seeded shuffle for consistent randomization per session
@@ -23,11 +23,12 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return shuffled
 }
 
-export default function AleatoireView({ projects, categoryTitle }: AleatoireViewProps) {
-  const shuffled = useMemo(() => {
-    const seed = Math.floor(Date.now() / 86400000) // Changes daily
+export default function AleatoireView({ projects, ordered }: AleatoireViewProps) {
+  const displayProjects = useMemo(() => {
+    if (ordered) return projects
+    const seed = Math.floor(Date.now() / 86400000)
     return seededShuffle(projects, seed)
-  }, [projects])
+  }, [projects, ordered])
 
   return (
     <motion.div
@@ -37,7 +38,7 @@ export default function AleatoireView({ projects, categoryTitle }: AleatoireView
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <ScatteredGrid projects={shuffled} />
+      <ScatteredGrid projects={displayProjects} />
     </motion.div>
   )
 }

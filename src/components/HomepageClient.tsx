@@ -34,6 +34,7 @@ interface HomepageClientProps {
   categories: Category[]
   aboutBio?: any[] | null
   settings?: SiteSettings | null
+  homeOrder?: string[]
 }
 
 export default function HomepageClient({
@@ -41,17 +42,28 @@ export default function HomepageClient({
   categories,
   aboutBio,
   settings,
+  homeOrder = [],
 }: HomepageClientProps) {
   const searchParams = useSearchParams()
   const view = searchParams.get('view') || 'home'
 
   const isCategory = CATEGORY_KEYS.includes(view)
 
+  // Home view: use admin-defined order if available, otherwise all projects
+  const homeProjects = useMemo(() => {
+    if (homeOrder.length === 0) return projects
+    const projectMap = new Map(projects.map((p) => [p._id, p]))
+    const ordered = homeOrder
+      .map((id) => projectMap.get(id))
+      .filter((p): p is Project => p !== undefined)
+    return ordered.length > 0 ? ordered : projects
+  }, [projects, homeOrder])
+
   const filteredProjects = useMemo(() => {
-    if (!isCategory) return projects
+    if (!isCategory) return homeProjects
     const sanitySlug = CATEGORY_SLUG_MAP[view]
     return projects.filter((p) => p.category?.slug?.current === sanitySlug)
-  }, [projects, view, isCategory])
+  }, [projects, homeProjects, view, isCategory])
 
   const footerRef = useRef<HTMLElement>(null)
   const [footerHeight, setFooterHeight] = useState(0)
@@ -83,6 +95,7 @@ export default function HomepageClient({
               <AleatoireView
                 key={view}
                 projects={filteredProjects}
+                ordered={view === 'home' && homeOrder.length > 0}
               />
             )}
             {view === 'chronologique' && (
