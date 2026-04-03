@@ -105,7 +105,7 @@ export default defineType({
       title: 'Image de couverture',
       type: 'image',
       options: { hotspot: true },
-      description: 'Laisser vide pour un post texte seul (utilisera le champ Extrait / Sous-titre)',
+      description: 'Laisser vide pour un post texte seul (utilisera Extrait ou Description)',
     }),
     defineField({
       name: 'images',

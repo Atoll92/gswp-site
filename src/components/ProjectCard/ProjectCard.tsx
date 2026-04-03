@@ -134,10 +134,11 @@ export default function ProjectCard({
 
   // Text-only card
   if (isTextOnly) {
+    const textContent = project.subtitle || project.description
     return (
       <div className={`${styles.card} ${styles.textOnly} ${className}`}>
-        {project.subtitle ? (
-          <div className={styles.subtitle}>{project.subtitle}</div>
+        {textContent ? (
+          <div className={styles.subtitle}>{textContent}</div>
         ) : (
           <Link href={`/projet/${project.slug.current}`} className={styles.textOnlyTitle}>
             {project.title}
