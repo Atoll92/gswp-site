@@ -24,7 +24,8 @@
 
 .categorySeparator {
   font-size: 0.85rem;
-  color: var(--color-muted);
+  font-weight: 700;
+  color: var(--color-text);
   user-select: none;
 }
 

@@ -7,6 +7,11 @@
   .container {
     padding: var(--content-top) 25px 60px;
   }
+
+  .yearNav {
+    margin-left: calc(-25px + var(--page-padding));
+    margin-right: calc(-25px + var(--page-padding));
+  }
 }
 
 .yearNav {
@@ -17,10 +22,13 @@
   gap: 0.3rem;
   margin-bottom: 3rem;
   flex-wrap: wrap;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 0.5rem 0;
+  padding: 0.5rem var(--page-padding);
+  margin-left: calc(-90px + var(--page-padding));
+  margin-right: calc(-25px + var(--page-padding));
 }
 
 .yearNavItem {
@@ -31,7 +39,8 @@
 
 .yearSeparator {
   font-size: 0.85rem;
-  color: var(--color-muted);
+  font-weight: 700;
+  color: var(--color-text);
   user-select: none;
 }
 

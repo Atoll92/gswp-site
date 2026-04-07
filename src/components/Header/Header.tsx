@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import styles from './Header.module.css'
 import InfoPanel from '../InfoPanel/InfoPanel'
@@ -8,16 +8,14 @@ import type { SiteSettings } from '@/lib/types'
 
 const MENU_ITEMS = [
   { key: 'home', label: 'Home' },
-  { key: 'chronologique', label: 'Chronological' },
-  { key: 'temporary-theatres', label: 'Temporary Theatres' },
-  { key: 'interiors', label: 'Interiors' },
-  { key: 'exhibitions', label: 'Exhibitions' },
-  { key: 'fashion-shows', label: 'Fashion Shows' },
-  { key: 'celebrations', label: 'Celebrations' },
-  { key: 'theatre-scenography', label: 'Theatre Scenography' },
+  { key: 'theaters', label: 'Theaters' },
+  { key: 'architectures', label: 'Architectures' },
+  { key: 'expos', label: 'Expos' },
+  { key: 'shows', label: 'Shows' },
+  { key: 'timeline', label: 'Timeline' },
 ]
 
-function HeaderNav() {
+function HeaderNav({ onNavClick, onOpenInfo }: { onNavClick?: () => void; onOpenInfo?: () => void }) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -28,6 +26,7 @@ function HeaderNav() {
   if (!isHome) return null
 
   function handleViewChange(key: string) {
+    onNavClick?.()
     if (key === 'home') {
       router.push('/', { scroll: false })
     } else {
@@ -37,6 +36,15 @@ function HeaderNav() {
 
   return (
     <nav className={styles.nav}>
+      <button
+        className={styles.mobileInfoLink}
+        onClick={() => {
+          onNavClick?.()
+          onOpenInfo?.()
+        }}
+      >
+        George · William
+      </button>
       {MENU_ITEMS.map((item, i) => (
         <span key={item.key} className={styles.navItemWrap}>
           <button
@@ -61,20 +69,42 @@ interface HeaderProps {
 
 export default function Header({ bio, settings }: HeaderProps) {
   const [infoPanelOpen, setInfoPanelOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const isHome = pathname === '/'
+
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${menuOpen ? styles.menuOpen : ''}`}>
         <button
           className={styles.firmName}
           onClick={() => setInfoPanelOpen(!infoPanelOpen)}
         >
           George · William
         </button>
+        {isHome && (
+          <button
+            className={styles.burger}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLineOpen : ''}`} />
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLineOpen : ''}`} />
+            <span className={`${styles.burgerLine} ${menuOpen ? styles.burgerLineOpen : ''}`} />
+          </button>
+        )}
         <Suspense>
-          <HeaderNav />
+          <HeaderNav onNavClick={() => setMenuOpen(false)} onOpenInfo={() => setInfoPanelOpen(true)} />
         </Suspense>
       </header>
+      {menuOpen && (
+        <div className={styles.menuOverlay} onClick={() => setMenuOpen(false)} />
+      )}
       <InfoPanel
         isOpen={infoPanelOpen}
         onClose={() => setInfoPanelOpen(false)}

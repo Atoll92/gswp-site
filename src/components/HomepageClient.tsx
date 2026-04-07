@@ -11,22 +11,18 @@ import type { Project, Category, SiteSettings } from '@/lib/types'
 
 // Category keys matching the flat header menu
 const CATEGORY_KEYS = [
-  'temporary-theatres',
-  'interiors',
-  'exhibitions',
-  'fashion-shows',
-  'celebrations',
-  'theatre-scenography',
+  'theaters',
+  'architectures',
+  'expos',
+  'shows',
 ]
 
 // Map header menu keys to Sanity category slugs
 const CATEGORY_SLUG_MAP: Record<string, string> = {
-  'temporary-theatres': 'architecture-theatres',
-  'interiors': 'architecture-interieurs',
-  'exhibitions': 'expositions',
-  'fashion-shows': 'defiles',
-  'celebrations': 'celebrations',
-  'theatre-scenography': 'scenographie-theatre',
+  'theaters': 'architecture-theatres',
+  'architectures': 'architecture-interieurs',
+  'expos': 'expositions',
+  'shows': 'defiles',
 }
 
 interface HomepageClientProps {
@@ -98,8 +94,8 @@ export default function HomepageClient({
                 ordered={view === 'home' && homeOrder.length > 0}
               />
             )}
-            {view === 'chronologique' && (
-              <ChronologiqueView key="chronologique" projects={projects} />
+            {view === 'timeline' && (
+              <ChronologiqueView key="timeline" projects={projects} />
             )}
           </AnimatePresence>
         </main>
