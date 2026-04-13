@@ -1,9 +1,9 @@
 .page {
   min-height: 100vh;
+  padding-top: var(--content-top);
 }
 
 .carouselSection {
-  padding-top: var(--content-top);
   margin-bottom: 3rem;
 }
 
@@ -90,11 +90,15 @@
   font-weight: 400;
 }
 
+.backLinkWrap {
+  padding: 0 var(--page-padding);
+}
+
 .backLink {
   display: inline-block;
-  margin-bottom: 2rem;
-  font-size: 0.85rem;
-  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   transition: opacity 0.2s;
 }
 

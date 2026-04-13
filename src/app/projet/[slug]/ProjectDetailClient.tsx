@@ -24,7 +24,7 @@ export default function ProjectDetailClient({ project, relatedProjects }: Projec
     <>
       <Header />
       <div className={styles.page}>
-        <div style={{ padding: '0 var(--page-padding)' }}>
+        <div className={styles.backLinkWrap}>
           <Link href="/" className={styles.backLink}>
             &larr; Back
           </Link>
