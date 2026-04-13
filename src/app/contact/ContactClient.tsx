@@ -1,8 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Header from '@/components/Header/Header'
-import Footer from '@/components/Footer/Footer'
 import type { SiteSettings } from '@/lib/types'
 import styles from './page.module.css'
 
@@ -17,10 +15,8 @@ export default function ContactClient({ settings }: ContactClientProps) {
   const phone = settings?.phone || ''
 
   return (
-    <>
-      <Header />
-      <div className={styles.page}>
-        <Link href="/" className={styles.backLink}>&larr; Back</Link>
+    <div className={styles.page}>
+      <Link href="/" className={styles.backLink}>&larr; Back</Link>
         <h1 className={styles.title}>Contact</h1>
         <div className={styles.info}>
           <div className={styles.label}>{firmName}</div>
@@ -43,8 +39,6 @@ export default function ContactClient({ settings }: ContactClientProps) {
             </>
           )}
         </div>
-      </div>
-      <Footer />
-    </>
+    </div>
   )
 }

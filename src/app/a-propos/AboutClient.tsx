@@ -3,8 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
-import Header from '@/components/Header/Header'
-import Footer from '@/components/Footer/Footer'
 import type { AboutPage } from '@/lib/types'
 import { urlFor } from '../../../sanity/lib/image'
 import styles from './page.module.css'
@@ -15,10 +13,8 @@ interface AboutClientProps {
 
 export default function AboutClient({ about }: AboutClientProps) {
   return (
-    <>
-      <Header />
-      <div className={styles.page}>
-        <Link href="/" className={styles.backLink}>&larr; Back</Link>
+    <div className={styles.page}>
+      <Link href="/" className={styles.backLink}>&larr; Back</Link>
         {about?.content && (
           <div className={styles.content}>
             <PortableText value={about.content} />
@@ -47,8 +43,6 @@ export default function AboutClient({ about }: AboutClientProps) {
             </p>
           </div>
         )}
-      </div>
-      <Footer />
-    </>
+    </div>
   )
 }
