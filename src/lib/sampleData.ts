@@ -1,13 +1,10 @@
 import type { Project, Category } from './types'
 
 export const sampleCategories: Category[] = [
-  { _id: 'cat-1', title: 'Architecture [Théâtres]', slug: { current: 'architecture-theatres' }, order: 1 },
-  { _id: 'cat-2', title: 'Architecture [Intérieurs]', slug: { current: 'architecture-interieurs' }, order: 2 },
-  { _id: 'cat-3', title: 'Expositions', slug: { current: 'expositions' }, order: 3 },
-  { _id: 'cat-4', title: 'Défilés', slug: { current: 'defiles' }, order: 4 },
-  { _id: 'cat-5', title: 'Célébrations', slug: { current: 'celebrations' }, order: 5 },
-  { _id: 'cat-6', title: 'Scénographie de théâtre', slug: { current: 'scenographie-theatre' }, order: 6 },
-  { _id: 'cat-7', title: 'Showroom', slug: { current: 'showroom' }, order: 7 },
+  { _id: 'cat-1', title: 'Theaters', slug: { current: 'architecture-theatres' }, order: 1 },
+  { _id: 'cat-2', title: 'Architectures', slug: { current: 'architecture-interieurs' }, order: 2 },
+  { _id: 'cat-3', title: 'Expos', slug: { current: 'expositions' }, order: 3 },
+  { _id: 'cat-4', title: 'Shows', slug: { current: 'defiles' }, order: 4 },
 ]
 
 const placeholder = {

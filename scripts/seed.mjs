@@ -29,30 +29,19 @@ async function seed() {
   // 1. Create categories
   console.log('Creating categories...')
   const categoryData = [
-    { title: 'Architecture [Théâtres]', order: 1 },
-    { title: 'Architecture [Intérieurs]', order: 2 },
-    { title: 'Expositions', order: 3 },
-    { title: 'Défilés', order: 4 },
-    { title: 'Célébrations', order: 5 },
-    { title: 'Scénographie de théâtre', order: 6 },
-    { title: 'Showroom', order: 7 },
+    { title: 'Theaters', slug: 'architecture-theatres', order: 1 },
+    { title: 'Architectures', slug: 'architecture-interieurs', order: 2 },
+    { title: 'Expos', slug: 'expositions', order: 3 },
+    { title: 'Shows', slug: 'defiles', order: 4 },
   ]
 
   const categories = {}
   for (const cat of categoryData) {
-    const slug = cat.title
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\[|\]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim()
-
     const doc = await client.createOrReplace({
-      _id: `category-${slug}`,
+      _id: `category-${cat.slug}`,
       _type: 'category',
       title: cat.title,
-      slug: { _type: 'slug', current: slug },
+      slug: { _type: 'slug', current: cat.slug },
       order: cat.order,
     })
     categories[cat.title] = doc._id
@@ -67,7 +56,7 @@ async function seed() {
       _id: 'project-figure-libre',
       title: 'Figure Libre',
       slug: 'figure-libre',
-      category: 'Expositions',
+      category: 'Expos',
       year: 2024,
       location: 'Paris, France',
       country: 'FRANCE',
@@ -86,7 +75,7 @@ Conceived as a flexible, adaptable, technical, organic, woven, visual, and typol
       _id: 'project-the-wall',
       title: 'The Wall',
       slug: 'the-wall',
-      category: 'Architecture [Théâtres]',
+      category: 'Theaters',
       year: 2024,
       location: 'Logroño, Spain',
       country: 'SPAIN',
@@ -103,7 +92,7 @@ Conceived as a flexible, adaptable, technical, organic, woven, visual, and typol
       _id: 'project-culture-market',
       title: 'Culture Market',
       slug: 'culture-market',
-      category: 'Expositions',
+      category: 'Expos',
       year: 2024,
       location: 'Brussels, Belgium',
       country: 'BELGIUM',
@@ -120,7 +109,7 @@ Conceived as a flexible, adaptable, technical, organic, woven, visual, and typol
       _id: 'project-hermes-fw25',
       title: 'Hermès FW25 Shanghai',
       slug: 'hermes-fw25-shanghai',
-      category: 'Défilés',
+      category: 'Shows',
       year: 2025,
       location: 'Shanghai, China',
       country: 'CHINA',
@@ -137,7 +126,7 @@ Conceived as a flexible, adaptable, technical, organic, woven, visual, and typol
       _id: 'project-ball-theater',
       title: 'Ball Theater',
       slug: 'ball-theater',
-      category: 'Architecture [Théâtres]',
+      category: 'Theaters',
       year: 2023,
       location: 'Paris, France',
       country: 'FRANCE',
@@ -154,7 +143,7 @@ Conceived as a flexible, adaptable, technical, organic, woven, visual, and typol
       _id: 'project-les-portes',
       title: 'Les Portes du possible',
       slug: 'les-portes-du-possible',
-      category: 'Expositions',
+      category: 'Expos',
       year: 2024,
       location: 'Paris, France',
       country: 'FRANCE',
