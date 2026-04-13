@@ -1,22 +1,26 @@
 'use client'
 
 import Link from 'next/link'
+import Header from '@/components/Header/Header'
 import type { SiteSettings } from '@/lib/types'
 import styles from './page.module.css'
 
 interface ContactClientProps {
   settings: SiteSettings | null
+  bio?: any[] | null
 }
 
-export default function ContactClient({ settings }: ContactClientProps) {
+export default function ContactClient({ settings, bio }: ContactClientProps) {
   const firmName = settings?.firmName || 'Georgi Stanishev & William Parlon'
   const address = settings?.address || '16 rue Léopold Bellan\n75002 Paris'
   const email = settings?.email || 'contact@gswp.fr'
   const phone = settings?.phone || ''
 
   return (
-    <div className={styles.page}>
-      <Link href="/" className={styles.backLink}>&larr; Back</Link>
+    <>
+      <Header bio={bio || null} settings={settings} />
+      <div className={styles.page}>
+        <Link href="/" className={styles.backLink}>&larr; Back</Link>
         <h1 className={styles.title}>Contact</h1>
         <div className={styles.info}>
           <div className={styles.label}>{firmName}</div>
@@ -39,6 +43,7 @@ export default function ContactClient({ settings }: ContactClientProps) {
             </>
           )}
         </div>
-    </div>
+      </div>
+    </>
   )
 }
