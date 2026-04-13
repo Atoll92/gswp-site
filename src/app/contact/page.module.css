@@ -38,9 +38,11 @@
 
 .backLink {
   display: inline-block;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
   font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   transition: opacity 0.2s;
 }
 
