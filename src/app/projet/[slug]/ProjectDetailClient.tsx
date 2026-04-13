@@ -24,6 +24,11 @@ export default function ProjectDetailClient({ project, relatedProjects }: Projec
     <>
       <Header />
       <div className={styles.page}>
+        <div style={{ padding: '0 var(--page-padding)' }}>
+          <Link href="/" className={styles.backLink}>
+            &larr; Back
+          </Link>
+        </div>
         <div className={styles.carouselSection}>
           <ProjectCarousel
             images={allImages}
@@ -105,11 +110,6 @@ export default function ProjectDetailClient({ project, relatedProjects }: Projec
           </div>
         )}
 
-        <div style={{ padding: '0 var(--page-padding)' }}>
-          <Link href="/" className={styles.backLink}>
-            &larr; Back
-          </Link>
-        </div>
       </div>
       <Footer />
     </>

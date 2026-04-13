@@ -18,6 +18,7 @@ export default function AboutClient({ about }: AboutClientProps) {
     <>
       <Header />
       <div className={styles.page}>
+        <Link href="/" className={styles.backLink}>&larr; Back</Link>
         {about?.content && (
           <div className={styles.content}>
             <PortableText value={about.content} />
@@ -46,7 +47,6 @@ export default function AboutClient({ about }: AboutClientProps) {
             </p>
           </div>
         )}
-        <Link href="/" className={styles.backLink}>&larr; Back</Link>
       </div>
       <Footer />
     </>
