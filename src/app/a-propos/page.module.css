@@ -27,3 +27,15 @@
   width: auto;
   object-fit: cover;
 }
+
+.backLink {
+  display: inline-block;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.backLink:hover {
+  opacity: 0.6;
+}

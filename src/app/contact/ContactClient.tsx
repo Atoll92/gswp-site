@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import type { SiteSettings } from '@/lib/types'
@@ -41,6 +42,7 @@ export default function ContactClient({ settings }: ContactClientProps) {
             </>
           )}
         </div>
+        <Link href="/" className={styles.backLink}>&larr; Back</Link>
       </div>
       <Footer />
     </>

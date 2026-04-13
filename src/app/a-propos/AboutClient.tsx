@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header/Header'
@@ -45,6 +46,7 @@ export default function AboutClient({ about }: AboutClientProps) {
             </p>
           </div>
         )}
+        <Link href="/" className={styles.backLink}>&larr; Back</Link>
       </div>
       <Footer />
     </>
