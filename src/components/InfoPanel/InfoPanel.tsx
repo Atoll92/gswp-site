@@ -78,6 +78,11 @@ export default function InfoPanel({ isOpen, onClose, bio, settings }: InfoPanelP
                 <Link href="/contact" className={styles.navLink} onClick={onClose}>Contact</Link>
                 <Link href="/" className={styles.navLink} onClick={onClose}>Portfolio</Link>
               </nav>
+
+              <div className={styles.credits}>
+                <span>design : Beno&icirc;t Magdelaine</span>
+                <span>development : Double Geste</span>
+              </div>
             </div>
           </motion.aside>
         </>
