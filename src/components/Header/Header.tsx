@@ -65,10 +65,16 @@ function HeaderNav({ onNavClick, onOpenInfo }: { onNavClick?: () => void; onOpen
 interface HeaderProps {
   bio?: any[] | null
   settings?: SiteSettings | null
+  infoPanelOpen?: boolean
+  onInfoPanelChange?: (open: boolean) => void
 }
 
-export default function Header({ bio, settings }: HeaderProps) {
-  const [infoPanelOpen, setInfoPanelOpen] = useState(false)
+export default function Header({ bio, settings, infoPanelOpen: controlledOpen, onInfoPanelChange }: HeaderProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+
+  // Support both controlled (from parent) and uncontrolled (standalone) modes
+  const infoPanelOpen = controlledOpen ?? internalOpen
+  const setInfoPanelOpen = onInfoPanelChange ?? setInternalOpen
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === '/'

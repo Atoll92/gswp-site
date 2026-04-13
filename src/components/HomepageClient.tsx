@@ -1,10 +1,9 @@
 'use client'
 
-import { useMemo, useRef, useState, useEffect } from 'react'
+import { useMemo, useRef, useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
 import Header from './Header/Header'
-import Footer from './Footer/Footer'
 import AleatoireView from './AleatoireView/AleatoireView'
 import ChronologiqueView from './ChronologiqueView/ChronologiqueView'
 import type { Project, Category, SiteSettings } from '@/lib/types'
@@ -45,6 +44,9 @@ export default function HomepageClient({
 
   const isCategory = CATEGORY_KEYS.includes(view)
 
+  // InfoPanel state (controlled from here, passed to Header)
+  const [infoPanelOpen, setInfoPanelOpen] = useState(false)
+
   // Home view: use admin-defined order if available, otherwise all projects
   const homeProjects = useMemo(() => {
     if (homeOrder.length === 0) return projects
@@ -61,17 +63,38 @@ export default function HomepageClient({
     return projects.filter((p) => p.category?.slug?.current === sanitySlug)
   }, [projects, homeProjects, view, isCategory])
 
-  const footerRef = useRef<HTMLElement>(null)
-  const [footerHeight, setFooterHeight] = useState(0)
+  // Open sidebar when user scrolls to the bottom sentinel
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const hasTriggeredRef = useRef(false)
+
+  // Reset trigger when view changes
+  useEffect(() => {
+    hasTriggeredRef.current = false
+  }, [view])
 
   useEffect(() => {
-    const el = footerRef.current
+    const el = sentinelRef.current
     if (!el) return
-    const measure = () => setFooterHeight(el.getBoundingClientRect().height)
-    measure()
-    const observer = new ResizeObserver(() => measure())
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggeredRef.current) {
+          hasTriggeredRef.current = true
+          setInfoPanelOpen(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
     observer.observe(el)
     return () => observer.disconnect()
+  }, [])
+
+  // Reset trigger flag when panel is closed so it can fire again on next scroll-to-bottom
+  const handleInfoPanelChange = useCallback((open: boolean) => {
+    setInfoPanelOpen(open)
+    if (!open) {
+      hasTriggeredRef.current = false
+    }
   }, [])
 
   return (
@@ -81,10 +104,14 @@ export default function HomepageClient({
           position: 'relative',
           zIndex: 1,
           background: 'var(--color-bg)',
-          marginBottom: footerHeight,
         }}
       >
-        <Header bio={aboutBio} settings={settings} />
+        <Header
+          bio={aboutBio}
+          settings={settings}
+          infoPanelOpen={infoPanelOpen}
+          onInfoPanelChange={handleInfoPanelChange}
+        />
         <main>
           <AnimatePresence mode="wait">
             {(view === 'home' || isCategory) && (
@@ -99,8 +126,9 @@ export default function HomepageClient({
             )}
           </AnimatePresence>
         </main>
+        {/* Sentinel: triggers sidebar when user scrolls to bottom */}
+        <div ref={sentinelRef} style={{ height: 1 }} />
       </div>
-      <Footer ref={footerRef} settings={settings} />
     </>
   )
 }
