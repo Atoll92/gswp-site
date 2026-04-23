@@ -34,11 +34,15 @@ export default function ScatteredGrid({
           landscapeIdx++
         }
 
+        // Apply displaySize multiplier
+        const sizeMultiplier = (project.displaySize || 100) / 100
+        const adjustedWidth = Math.round(itemWidth * sizeMultiplier)
+
         return (
           <div
             key={project._id}
             className={styles.item}
-            style={{ width: `${itemWidth}px` }}
+            style={{ width: `${adjustedWidth}px` }}
           >
             <ProjectCard
               project={project}

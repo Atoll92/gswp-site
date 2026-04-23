@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import ProjectCarousel from '@/components/ProjectCarousel/ProjectCarousel'
@@ -41,31 +42,25 @@ export default function ProjectDetailClient({ project, relatedProjects }: Projec
           <h1 className={styles.title}>{project.title}</h1>
 
           <div className={styles.meta}>
-            {project.projectType && (
-              <span className={styles.metaLine}>{project.projectType}</span>
-            )}
-            {project.surface && (
-              <span className={styles.metaLine}>Surface : {project.surface}</span>
-            )}
-            {project.curator && (
-              <span className={styles.metaLine}>Curator : {project.curator}</span>
-            )}
             {project.venue && (
               <span className={styles.metaLine}>{project.venue}</span>
             )}
             {project.location && (
               <span className={styles.metaLine}>{project.location}</span>
             )}
+            {project.country && (
+              <span className={styles.metaLine}>{project.country}</span>
+            )}
             {project.year && (
               <span className={styles.metaLine}>{project.year}</span>
             )}
           </div>
 
-          <div>
-            {project.description && (
-              <p className={styles.description}>{project.description}</p>
-            )}
-          </div>
+          {project.credits && project.credits.length > 0 && (
+            <div className={styles.description}>
+              <PortableText value={project.credits} />
+            </div>
+          )}
         </div>
 
         {relatedProjects.length > 0 && (

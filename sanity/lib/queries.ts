@@ -16,10 +16,6 @@ export async function getProjects(): Promise<Project[]> {
         location,
         country,
         venue,
-        projectType,
-        surface,
-        curator,
-        description,
         subtitle,
         credits,
         tags,
@@ -28,7 +24,8 @@ export async function getProjects(): Promise<Project[]> {
           ...,
           caption
         },
-        planImage,
+        displaySize,
+        "linkedProjectIds": linkedProjects[]._ref,
         order
       }
     `)
@@ -55,10 +52,6 @@ export async function getProject(slug: string): Promise<Project | null> {
         location,
         country,
         venue,
-        projectType,
-        surface,
-        curator,
-        description,
         subtitle,
         credits,
         tags,
@@ -67,7 +60,8 @@ export async function getProject(slug: string): Promise<Project | null> {
           ...,
           caption
         },
-        planImage,
+        displaySize,
+        "linkedProjectIds": linkedProjects[]._ref,
         order
       }
     `, { slug })
@@ -135,6 +129,26 @@ export async function getHomeOrder(): Promise<string[]> {
     return result?.projectIds || []
   } catch {
     return []
+  }
+}
+
+export async function getCategoryOrders(): Promise<Record<string, string[]>> {
+  if (!isSanityConfigured) return {}
+
+  try {
+    const results = await getClient().fetch(`
+      *[_type == "categoryPage"] {
+        "slug": category->slug.current,
+        "projectIds": projects[]._ref
+      }
+    `)
+    const map: Record<string, string[]> = {}
+    for (const r of results) {
+      if (r.slug && r.projectIds) map[r.slug] = r.projectIds
+    }
+    return map
+  } catch {
+    return {}
   }
 }
 

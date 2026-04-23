@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { PortableText } from '@portabletext/react'
 import styles from './ProjectCard.module.css'
 import type { Project, SanityImage } from '@/lib/types'
 import { urlFor, getImageDimensions } from '../../../sanity/lib/image'
@@ -134,7 +135,7 @@ export default function ProjectCard({
 
   // Text-only card
   if (isTextOnly) {
-    const textContent = project.subtitle || project.description
+    const textContent = project.subtitle
     return (
       <div className={`${styles.card} ${styles.textOnly} ${className}`}>
         {textContent ? (
@@ -161,12 +162,11 @@ export default function ProjectCard({
   }
   if (project.location) {
     infoElements.push(<span key="sep-loc"> · </span>)
-    infoElements.push(
-      <span key="loc" className={styles.infoDetail}>
-        {project.location.split(',')[0]}
-        {project.country && `, ${project.country}`}
-      </span>
-    )
+    infoElements.push(<span key="loc" className={styles.infoDetail}>{project.location}</span>)
+  }
+  if (project.country) {
+    infoElements.push(<span key="sep-country"> · </span>)
+    infoElements.push(<span key="country" className={styles.infoDetail}>{project.country}</span>)
   }
   if (project.year) {
     infoElements.push(<span key="sep-year"> · </span>)
@@ -179,14 +179,20 @@ export default function ProjectCard({
         <div className={styles.creditsSlide}>
           <p className={styles.creditsTitle}>{project.title}</p>
           {project.venue && <p>{project.venue}</p>}
-          {project.location && (
+          {(project.location || project.country) && (
             <p>
-              {project.location.split(',')[0]}
-              {project.country && `, ${project.country}`}
+              {[project.location, project.country].filter(Boolean).join(' · ')}
             </p>
           )}
           {project.year && <p>{project.year}</p>}
-          {project.credits && <p className={styles.creditsText}>{project.credits}</p>}
+          {project.credits && project.credits.length > 0 && (
+            <div className={styles.creditsText}>
+              <PortableText value={project.credits} />
+            </div>
+          )}
+          {project.tags && project.tags.length > 0 && (
+            <p className={styles.creditsTags}>{project.tags.join(' · ')}</p>
+          )}
         </div>
       ) : currentImageUrl ? (
         <>

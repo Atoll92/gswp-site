@@ -7,16 +7,13 @@ export interface Project {
   location: string
   country: string
   venue: string
-  projectType: string
-  surface: string
-  curator: string
-  description: string
   subtitle: string
-  credits: string
+  credits: any[]
   tags: string[]
   coverImage: SanityImage
   images: SanityImage[]
-  planImage: SanityImage | null
+  displaySize?: number
+  linkedProjectIds?: string[]
   order: number
   // Local images for sample data (before Sanity is populated)
   localCover?: string

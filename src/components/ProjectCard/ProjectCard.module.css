@@ -107,6 +107,16 @@
   color: var(--color-muted);
 }
 
+.creditsText p {
+  margin-bottom: 0.15rem;
+}
+
+.creditsTags {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--color-muted);
+}
+
 /* Slide indicator dots */
 .dots {
   position: absolute;
@@ -213,4 +223,14 @@
   font-size: 0.85rem;
   color: #999;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .info {
+    opacity: 1;
+  }
+
+  .verticalInfo {
+    opacity: 1;
+  }
 }

@@ -23,11 +23,43 @@ function seededShuffle<T>(array: T[], seed: number): T[] {
   return shuffled
 }
 
+// Ensure linked projects appear adjacent in the array
+function enforceLinkedAdjacency(items: Project[]): Project[] {
+  const result = [...items]
+  const processed = new Set<string>()
+
+  for (let i = 0; i < result.length; i++) {
+    const project = result[i]
+    if (processed.has(project._id)) continue
+    processed.add(project._id)
+
+    const linkedIds = project.linkedProjectIds || []
+    if (linkedIds.length === 0) continue
+
+    let insertAt = i + 1
+    for (const linkedId of linkedIds) {
+      const linkedIdx = result.findIndex((p, idx) => p._id === linkedId && idx > i)
+      if (linkedIdx > -1 && linkedIdx !== insertAt) {
+        const [linked] = result.splice(linkedIdx, 1)
+        result.splice(insertAt, 0, linked)
+        processed.add(linked._id)
+        insertAt++
+      }
+    }
+  }
+  return result
+}
+
 export default function AleatoireView({ projects, ordered }: AleatoireViewProps) {
   const displayProjects = useMemo(() => {
-    if (ordered) return projects
-    const seed = Math.floor(Date.now() / 86400000)
-    return seededShuffle(projects, seed)
+    let items: Project[]
+    if (ordered) {
+      items = projects
+    } else {
+      const seed = Math.floor(Date.now() / 86400000)
+      items = seededShuffle(projects, seed)
+    }
+    return enforceLinkedAdjacency(items)
   }, [projects, ordered])
 
   return (

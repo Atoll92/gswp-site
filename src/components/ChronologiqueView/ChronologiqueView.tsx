@@ -22,7 +22,10 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
     }
     return Object.entries(groups)
       .sort(([a], [b]) => Number(b) - Number(a))
-      .map(([year, items]) => ({ year: Number(year), projects: items }))
+      .map(([year, items]) => ({
+        year: Number(year),
+        projects: items.sort((a, b) => (a.order || 999) - (b.order || 999)),
+      }))
   }, [projects])
 
   const yearRefs = useRef<Record<number, HTMLDivElement | null>>({})

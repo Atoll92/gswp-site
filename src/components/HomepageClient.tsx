@@ -30,6 +30,7 @@ interface HomepageClientProps {
   aboutBio?: any[] | null
   settings?: SiteSettings | null
   homeOrder?: string[]
+  categoryOrders?: Record<string, string[]>
 }
 
 export default function HomepageClient({
@@ -38,6 +39,7 @@ export default function HomepageClient({
   aboutBio,
   settings,
   homeOrder = [],
+  categoryOrders = {},
 }: HomepageClientProps) {
   const searchParams = useSearchParams()
   const view = searchParams.get('view') || 'home'
@@ -46,6 +48,8 @@ export default function HomepageClient({
 
   // InfoPanel state (controlled from here, passed to Header)
   const [infoPanelOpen, setInfoPanelOpen] = useState(false)
+  const wasAutoOpenedRef = useRef(false)
+  const lastScrollYRef = useRef(0)
 
   // Home view: use admin-defined order if available, otherwise all projects
   const homeProjects = useMemo(() => {
@@ -60,16 +64,31 @@ export default function HomepageClient({
   const filteredProjects = useMemo(() => {
     if (!isCategory) return homeProjects
     const sanitySlug = CATEGORY_SLUG_MAP[view]
-    return projects.filter((p) => p.category?.slug?.current === sanitySlug)
-  }, [projects, homeProjects, view, isCategory])
+    const categoryProjects = projects.filter((p) => p.category?.slug?.current === sanitySlug)
+
+    // Apply category-specific ordering if available
+    const orderIds = categoryOrders[sanitySlug]
+    if (orderIds && orderIds.length > 0) {
+      const projectMap = new Map(categoryProjects.map((p) => [p._id, p]))
+      const ordered = orderIds
+        .map((id) => projectMap.get(id))
+        .filter((p): p is Project => p !== undefined)
+      const orderedIds = new Set(orderIds)
+      const remaining = categoryProjects.filter((p) => !orderedIds.has(p._id))
+      return [...ordered, ...remaining]
+    }
+    return categoryProjects
+  }, [projects, homeProjects, view, isCategory, categoryOrders])
 
   // Open sidebar when user scrolls to the bottom sentinel
   const sentinelRef = useRef<HTMLDivElement>(null)
   const hasTriggeredRef = useRef(false)
 
-  // Reset trigger when view changes
+  // Close sidebar and reset trigger when view changes
   useEffect(() => {
     hasTriggeredRef.current = false
+    setInfoPanelOpen(false)
+    wasAutoOpenedRef.current = false
   }, [view])
 
   useEffect(() => {
@@ -80,6 +99,7 @@ export default function HomepageClient({
       ([entry]) => {
         if (entry.isIntersecting && !hasTriggeredRef.current) {
           hasTriggeredRef.current = true
+          wasAutoOpenedRef.current = true
           setInfoPanelOpen(true)
         }
       },
@@ -89,11 +109,26 @@ export default function HomepageClient({
     return () => observer.disconnect()
   }, [])
 
+  // Close sidebar when scrolling up after auto-open
+  useEffect(() => {
+    function handleScroll() {
+      const currentY = window.scrollY
+      if (wasAutoOpenedRef.current && infoPanelOpen && currentY < lastScrollYRef.current - 50) {
+        setInfoPanelOpen(false)
+        wasAutoOpenedRef.current = false
+      }
+      lastScrollYRef.current = currentY
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [infoPanelOpen])
+
   // Reset trigger flag when panel is closed so it can fire again on next scroll-to-bottom
   const handleInfoPanelChange = useCallback((open: boolean) => {
     setInfoPanelOpen(open)
     if (!open) {
       hasTriggeredRef.current = false
+      wasAutoOpenedRef.current = false
     }
   }, [])
 
