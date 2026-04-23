@@ -130,6 +130,49 @@ export default defineType({
       type: 'number',
       description: "Ordre d'affichage (plus petit = premier)",
     }),
+    // --- Legacy fields (read-only, preserved for existing data) ---
+    defineField({
+      name: 'projectType',
+      title: 'Type de projet (archive)',
+      type: 'string',
+      readOnly: true,
+      group: 'archive',
+    }),
+    defineField({
+      name: 'surface',
+      title: 'Surface (archive)',
+      type: 'string',
+      readOnly: true,
+      group: 'archive',
+    }),
+    defineField({
+      name: 'curator',
+      title: 'Commissaire (archive)',
+      type: 'string',
+      readOnly: true,
+      group: 'archive',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description (archive)',
+      type: 'text',
+      readOnly: true,
+      group: 'archive',
+    }),
+    defineField({
+      name: 'planImage',
+      title: 'Image plan (archive)',
+      type: 'image',
+      readOnly: true,
+      group: 'archive',
+    }),
+  ],
+  groups: [
+    {
+      name: 'archive',
+      title: 'Archive (lecture seule)',
+      default: false,
+    },
   ],
   preview: {
     select: {
