@@ -5,7 +5,7 @@ const client = createClient({
   dataset: 'production',
   apiVersion: '2024-01-01',
   useCdn: false,
-  token: process.env.SANITY_TOKEN || 'sk8kXAdeMH3kpF0KWPh0fdF6GaL5PkyRD1ENXzGM4GkllBKy10REmMG65GIwfFY0RqjeebBdflEJxLnz5LLzdxhJ0MPVw9DKKxjy7zXJVk5UTwfJ7phe1K1emmBZ09NKMMqeixsZBGbpwqvYWLynRTTjFyh2NTWfCsH6M6lE0GLqpbuw4hla',
+  token: process.env.SANITY_TOKEN,
 })
 
 function textToPortableText(text) {
