@@ -7,7 +7,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'projects',
-      title: 'Projets (ordre d\'affichage)',
+      title: "Projets (ordre d'affichage)",
       type: 'array',
       of: [
         {
@@ -15,7 +15,19 @@ export default defineType({
           to: [{ type: 'project' }],
         },
       ],
-      description: 'Glisser-déposer pour réordonner. Laisser vide pour afficher tous les projets aléatoirement.',
+      description: 'Glisser-déposer pour réordonner. Les projets listés ici apparaissent en premier, les autres suivent.',
+    }),
+    defineField({
+      name: 'excludedProjects',
+      title: 'Projets exclus',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'project' }],
+        },
+      ],
+      description: 'Ces projets ne seront pas affichés sur la page d\'accueil.',
     }),
   ],
   preview: {

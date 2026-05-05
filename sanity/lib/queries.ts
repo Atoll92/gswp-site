@@ -117,34 +117,44 @@ export async function getCategories(): Promise<Category[]> {
   }
 }
 
-export async function getHomeOrder(): Promise<string[]> {
-  if (!isSanityConfigured) return []
+export async function getHomeOrder(): Promise<{ order: string[]; excluded: string[] }> {
+  if (!isSanityConfigured) return { order: [], excluded: [] }
 
   try {
     const result = await getClient().fetch(`
       *[_type == "homePage" && _id == "homePage"][0] {
-        "projectIds": projects[]._ref
+        "projectIds": projects[]._ref,
+        "excludedIds": excludedProjects[]._ref
       }
     `)
-    return result?.projectIds || []
+    return {
+      order: result?.projectIds || [],
+      excluded: result?.excludedIds || [],
+    }
   } catch {
-    return []
+    return { order: [], excluded: [] }
   }
 }
 
-export async function getCategoryOrders(): Promise<Record<string, string[]>> {
+export async function getCategoryOrders(): Promise<Record<string, { order: string[]; excluded: string[] }>> {
   if (!isSanityConfigured) return {}
 
   try {
     const results = await getClient().fetch(`
       *[_type == "categoryPage"] {
         "slug": category->slug.current,
-        "projectIds": projects[]._ref
+        "projectIds": projects[]._ref,
+        "excludedIds": excludedProjects[]._ref
       }
     `)
-    const map: Record<string, string[]> = {}
+    const map: Record<string, { order: string[]; excluded: string[] }> = {}
     for (const r of results) {
-      if (r.slug && r.projectIds) map[r.slug] = r.projectIds
+      if (r.slug) {
+        map[r.slug] = {
+          order: r.projectIds || [],
+          excluded: r.excludedIds || [],
+        }
+      }
     }
     return map
   } catch {

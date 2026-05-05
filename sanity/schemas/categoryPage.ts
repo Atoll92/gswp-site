@@ -17,13 +17,20 @@ export default defineType({
       title: "Projets (ordre d'affichage)",
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'project' }] }],
-      description: 'Glisser-déposer pour réordonner les projets dans cette catégorie.',
+      description: 'Glisser-déposer pour réordonner. Les projets listés ici apparaissent en premier, les autres suivent.',
+    }),
+    defineField({
+      name: 'excludedProjects',
+      title: 'Projets exclus',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'project' }] }],
+      description: 'Ces projets ne seront pas affichés dans cette catégorie.',
     }),
   ],
   preview: {
     select: { title: 'category.title' },
     prepare({ title }) {
-      return { title: `Ordre: ${title || 'Sans catégorie'}` }
+      return { title: title || 'Sans catégorie' }
     },
   },
 })

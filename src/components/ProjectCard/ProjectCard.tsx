@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
-import Link from 'next/link'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import styles from './ProjectCard.module.css'
@@ -44,6 +43,19 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [showCaption, setShowCaption] = useState(false)
+  const [inView, setInView] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true) },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   // Build slide sequence: cover + images + credits slide
   const slides = useMemo(() => {
@@ -137,13 +149,11 @@ export default function ProjectCard({
   if (isTextOnly) {
     const textContent = project.subtitle
     return (
-      <div className={`${styles.card} ${styles.textOnly} ${className}`}>
+      <div ref={cardRef} className={`${styles.card} ${styles.textOnly} ${className}`}>
         {textContent ? (
           <div className={styles.subtitle}>{textContent}</div>
         ) : (
-          <Link href={`/projet/${project.slug.current}`} className={styles.textOnlyTitle}>
-            {project.title}
-          </Link>
+          <span className={styles.textOnlyTitle}>{project.title}</span>
         )}
       </div>
     )
@@ -221,6 +231,7 @@ export default function ProjectCard({
 
   return (
     <div
+      ref={cardRef}
       className={`${styles.card} ${className} ${hasMultipleSlides ? styles.clickable : ''}`}
       onClick={hasMultipleSlides ? handleClick : undefined}
     >
@@ -234,21 +245,26 @@ export default function ProjectCard({
           <div className={styles.imageColumn}>
             {imageBlock}
           </div>
-          <Link href={`/projet/${project.slug.current}`} className={styles.verticalInfo}>
+          <div className={styles.verticalInfo}>
             {infoElements}
-          </Link>
+          </div>
         </div>
       ) : (
         /* Landscape: image full width, horizontal info below */
         <>
           {imageBlock}
           <div className={styles.info}>
-            <Link href={`/projet/${project.slug.current}`} className={styles.infoLink}>
+            <span className={styles.infoLink}>
               {infoElements}
-            </Link>
+            </span>
           </div>
         </>
       )}
+
+      {/* Mobile: title appears on viewport entry */}
+      <div className={`${styles.mobileTitle} ${inView ? styles.mobileTitleVisible : ''}`}>
+        {project.title}
+      </div>
     </div>
   )
 }
