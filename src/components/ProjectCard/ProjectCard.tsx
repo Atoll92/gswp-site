@@ -50,7 +50,7 @@ export default function ProjectCard({
     const el = cardRef.current
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true) },
+      ([entry]) => { setInView(entry.isIntersecting) },
       { threshold: 0.3 }
     )
     observer.observe(el)
