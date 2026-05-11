@@ -51,18 +51,14 @@ export default function HomepageClient({
   const wasAutoOpenedRef = useRef(false)
   const lastScrollYRef = useRef(0)
 
-  // Home view: show all projects, exclude explicitly excluded ones, order by admin order
+  // Home view: only show projects explicitly added to the homepage order
+  // If none are set, show all projects (initial setup)
   const homeProjects = useMemo(() => {
-    const excludedSet = new Set(homeOrder.excluded)
-    const available = projects.filter((p) => !excludedSet.has(p._id))
-    if (homeOrder.order.length === 0) return available
-    const projectMap = new Map(available.map((p) => [p._id, p]))
-    const ordered = homeOrder.order
+    if (homeOrder.order.length === 0) return projects
+    const projectMap = new Map(projects.map((p) => [p._id, p]))
+    return homeOrder.order
       .map((id) => projectMap.get(id))
       .filter((p): p is Project => p !== undefined)
-    const orderedIds = new Set(homeOrder.order)
-    const remaining = available.filter((p) => !orderedIds.has(p._id))
-    return [...ordered, ...remaining]
   }, [projects, homeOrder])
 
   const filteredProjects = useMemo(() => {
