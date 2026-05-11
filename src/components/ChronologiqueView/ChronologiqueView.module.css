@@ -3,26 +3,6 @@
   min-height: 100vh;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: var(--content-top) 25px 60px;
-  }
-
-  .yearNav {
-    margin-left: calc(-25px + var(--page-padding));
-    margin-right: calc(-25px + var(--page-padding));
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .yearNav::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 .yearNav {
   position: sticky;
   top: var(--header-height);
@@ -44,6 +24,8 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.3rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .yearSeparator {
@@ -70,4 +52,24 @@
 
 .yearGroup {
   margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: var(--content-top) 25px 60px;
+  }
+
+  .yearNav {
+    margin-left: calc(-25px + var(--page-padding));
+    margin-right: calc(-25px + var(--page-padding));
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .yearNav::-webkit-scrollbar {
+    display: none;
+  }
 }
