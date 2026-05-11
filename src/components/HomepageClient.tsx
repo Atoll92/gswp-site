@@ -30,7 +30,7 @@ interface HomepageClientProps {
   aboutBio?: any[] | null
   settings?: SiteSettings | null
   homeOrder?: { order: string[]; excluded: string[] }
-  categoryOrders?: Record<string, { order: string[]; excluded: string[] }>
+  categoryOrders?: Record<string, { order: string[] }>
 }
 
 export default function HomepageClient({
@@ -64,24 +64,17 @@ export default function HomepageClient({
   const filteredProjects = useMemo(() => {
     if (!isCategory) return homeProjects
     const sanitySlug = CATEGORY_SLUG_MAP[view]
-    const categoryProjects = projects.filter((p) => p.category?.slug?.current === sanitySlug)
 
-    // Apply category-specific ordering and exclusion
-    const catConfig = categoryOrders[sanitySlug]
-    const excludedSet = new Set(catConfig?.excluded || [])
-    const available = categoryProjects.filter((p) => !excludedSet.has(p._id))
-
-    const orderIds = catConfig?.order || []
+    // Categories: inclusion-based, same as homepage
+    const orderIds = categoryOrders[sanitySlug]?.order || []
     if (orderIds.length > 0) {
-      const projectMap = new Map(available.map((p) => [p._id, p]))
-      const ordered = orderIds
+      const projectMap = new Map(projects.map((p) => [p._id, p]))
+      return orderIds
         .map((id) => projectMap.get(id))
         .filter((p): p is Project => p !== undefined)
-      const orderedIds = new Set(orderIds)
-      const remaining = available.filter((p) => !orderedIds.has(p._id))
-      return [...ordered, ...remaining]
     }
-    return available
+    // Fallback: show all projects in this category
+    return projects.filter((p) => p.category?.slug?.current === sanitySlug)
   }, [projects, homeProjects, view, isCategory, categoryOrders])
 
   // Open sidebar when user scrolls to the bottom sentinel

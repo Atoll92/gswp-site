@@ -134,24 +134,20 @@ export async function getHomeOrder(): Promise<{ order: string[]; excluded: strin
   }
 }
 
-export async function getCategoryOrders(): Promise<Record<string, { order: string[]; excluded: string[] }>> {
+export async function getCategoryOrders(): Promise<Record<string, { order: string[] }>> {
   if (!isSanityConfigured) return {}
 
   try {
     const results = await getClient().fetch(`
       *[_type == "categoryPage"] {
         "slug": category->slug.current,
-        "projectIds": projects[]._ref,
-        "excludedIds": excludedProjects[]._ref
+        "projectIds": projects[]._ref
       }
     `)
-    const map: Record<string, { order: string[]; excluded: string[] }> = {}
+    const map: Record<string, { order: string[] }> = {}
     for (const r of results) {
       if (r.slug) {
-        map[r.slug] = {
-          order: r.projectIds || [],
-          excluded: r.excludedIds || [],
-        }
+        map[r.slug] = { order: r.projectIds || [] }
       }
     }
     return map
