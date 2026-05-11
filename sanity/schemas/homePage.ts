@@ -15,19 +15,7 @@ export default defineType({
           to: [{ type: 'project' }],
         },
       ],
-      description: 'Glisser-déposer pour réordonner. Les projets listés ici apparaissent en premier, les autres suivent.',
-    }),
-    defineField({
-      name: 'excludedProjects',
-      title: 'Projets exclus',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'project' }],
-        },
-      ],
-      description: 'Ces projets ne seront pas affichés sur la page d\'accueil.',
+      description: 'Seuls les projets listés ici apparaissent sur la page d\'accueil. Glisser-déposer pour réordonner.',
     }),
   ],
   preview: {
