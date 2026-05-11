@@ -7,13 +7,12 @@ export interface Project {
   location: string
   country: string
   venue: string
-  subtitle: string
+  subtitle: any[]
   credits: any[]
   tags: string[]
   coverImage: SanityImage
   images: SanityImage[]
   displaySize?: number
-  linkedProjectIds?: string[]
   order: number
   // Local images for sample data (before Sanity is populated)
   localCover?: string

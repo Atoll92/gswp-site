@@ -115,11 +115,13 @@ export default function ProjectCard({
   const currentSlideData = slides[currentSlide] || slides[0]
   const currentCaption = currentSlideData?.caption
 
-  const advanceSlide = useCallback(() => {
+  const goToSlide = useCallback((dir: 1 | -1) => {
     if (!hasMultipleSlides) return
-    setCurrentSlide((prev) => (prev + 1) % totalSlides)
+    setCurrentSlide((prev) => (prev + dir + totalSlides) % totalSlides)
     setShowCaption(false)
   }, [hasMultipleSlides, totalSlides])
+
+  const advanceSlide = useCallback(() => goToSlide(1), [goToSlide])
 
   const handleClick = useCallback(() => {
     if (currentCaption && !showCaption && typeof window !== 'undefined' && 'ontouchstart' in window) {
@@ -128,6 +130,25 @@ export default function ProjectCard({
     }
     advanceSlide()
   }, [currentCaption, showCaption, advanceSlide])
+
+  // Horizontal swipe support for mobile carousel
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }, [])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current || !hasMultipleSlides) return
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y
+    touchStartRef.current = null
+    // Only trigger if horizontal swipe is dominant and > 40px
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      e.preventDefault()
+      goToSlide(dx < 0 ? 1 : -1)
+    }
+  }, [hasMultipleSlides, goToSlide])
 
   const currentImageUrl = useMemo(() => {
     if (!currentSlideData || currentSlideData.type === 'credits') return null
@@ -147,11 +168,17 @@ export default function ProjectCard({
 
   // Text-only card
   if (isTextOnly) {
-    const textContent = project.subtitle
+    const hasSubtitle = Array.isArray(project.subtitle) ? project.subtitle.length > 0 : !!project.subtitle
     return (
       <div ref={cardRef} className={`${styles.card} ${styles.textOnly} ${className}`}>
-        {textContent ? (
-          <div className={styles.subtitle}>{textContent}</div>
+        {hasSubtitle ? (
+          <div className={styles.subtitle}>
+            {Array.isArray(project.subtitle) ? (
+              <PortableText value={project.subtitle} />
+            ) : (
+              project.subtitle
+            )}
+          </div>
         ) : (
           <span className={styles.textOnlyTitle}>{project.title}</span>
         )}
@@ -229,14 +256,24 @@ export default function ProjectCard({
     </div>
   )
 
+  const hasSubtitle = Array.isArray(project.subtitle) ? project.subtitle.length > 0 : !!project.subtitle
+
   return (
     <div
       ref={cardRef}
       className={`${styles.card} ${className} ${hasMultipleSlides ? styles.clickable : ''}`}
       onClick={hasMultipleSlides ? handleClick : undefined}
+      onTouchStart={hasMultipleSlides ? handleTouchStart : undefined}
+      onTouchEnd={hasMultipleSlides ? handleTouchEnd : undefined}
     >
-      {project.subtitle && (
-        <div className={styles.subtitle}>{project.subtitle}</div>
+      {hasSubtitle && (
+        <div className={styles.subtitle}>
+          {Array.isArray(project.subtitle) ? (
+            <PortableText value={project.subtitle} />
+          ) : (
+            project.subtitle
+          )}
+        </div>
       )}
 
       {!isLandscape ? (
@@ -261,9 +298,9 @@ export default function ProjectCard({
         </>
       )}
 
-      {/* Mobile: title appears on viewport entry */}
-      <div className={`${styles.mobileTitle} ${inView ? styles.mobileTitleVisible : ''}`}>
-        {project.title}
+      {/* Mobile: full info appears on viewport entry */}
+      <div className={`${styles.mobileInfo} ${inView ? styles.mobileInfoVisible : ''}`}>
+        {infoElements}
       </div>
     </div>
   )

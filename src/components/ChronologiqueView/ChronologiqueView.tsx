@@ -29,6 +29,21 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
   }, [projects])
 
   const yearRefs = useRef<Record<number, HTMLDivElement | null>>({})
+  const yearNavRefs = useRef<Record<number, HTMLSpanElement | null>>({})
+  const navRef = useRef<HTMLElement>(null)
+
+  // Auto-scroll nav to keep active year visible on mobile
+  useEffect(() => {
+    if (visibleYear == null) return
+    const btn = yearNavRefs.current[visibleYear]
+    const nav = navRef.current
+    if (!btn || !nav) return
+    const btnRect = btn.getBoundingClientRect()
+    const navRect = nav.getBoundingClientRect()
+    if (btnRect.left < navRect.left || btnRect.right > navRect.right) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+  }, [visibleYear])
 
   // Track which year section is currently in view
   useEffect(() => {
@@ -62,9 +77,9 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <nav className={styles.yearNav}>
+      <nav className={styles.yearNav} ref={navRef}>
         {grouped.map(({ year }, i) => (
-          <span key={year} className={styles.yearNavItem}>
+          <span key={year} className={styles.yearNavItem} ref={(el) => { yearNavRefs.current[year] = el }}>
             <button
               className={`${styles.yearNavLink} ${
                 visibleYear === year ? styles.yearNavLinkActive : ''

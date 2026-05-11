@@ -25,7 +25,6 @@ export async function getProjects(): Promise<Project[]> {
           caption
         },
         displaySize,
-        "linkedProjectIds": linkedProjects[]._ref,
         order
       }
     `)
@@ -61,7 +60,6 @@ export async function getProject(slug: string): Promise<Project | null> {
           caption
         },
         displaySize,
-        "linkedProjectIds": linkedProjects[]._ref,
         order
       }
     `, { slug })

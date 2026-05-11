@@ -12,6 +12,8 @@ interface ScatteredGridProps {
 
 const LANDSCAPE_WIDTHS = [520, 580, 500, 640, 550, 600]
 const PORTRAIT_WIDTHS = [300, 340, 360, 320, 380, 350]
+// Deterministic vertical margin offsets to break grid alignment
+const MARGIN_OFFSETS = [5, 9, 7, 10, 6, 8]
 
 export default function ScatteredGrid({
   projects,
@@ -20,6 +22,7 @@ export default function ScatteredGrid({
 }: ScatteredGridProps) {
   let landscapeIdx = 0
   let portraitIdx = 0
+  let marginIdx = 0
 
   return (
     <div className={styles.grid}>
@@ -38,11 +41,15 @@ export default function ScatteredGrid({
         const sizeMultiplier = (project.displaySize || 100) / 100
         const adjustedWidth = Math.round(itemWidth * sizeMultiplier)
 
+        // Randomized vertical margin offset to break alignment
+        const extraMargin = MARGIN_OFFSETS[marginIdx % MARGIN_OFFSETS.length]
+        marginIdx++
+
         return (
           <div
             key={project._id}
             className={styles.item}
-            style={{ width: `${adjustedWidth}px` }}
+            style={{ width: `${adjustedWidth}px`, marginTop: `${22 + extraMargin}px` }}
           >
             <ProjectCard
               project={project}

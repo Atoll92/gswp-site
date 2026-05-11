@@ -11,6 +11,15 @@
   .yearNav {
     margin-left: calc(-25px + var(--page-padding));
     margin-right: calc(-25px + var(--page-padding));
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .yearNav::-webkit-scrollbar {
+    display: none;
   }
 }
 

@@ -51,8 +51,9 @@ export default defineType({
     defineField({
       name: 'subtitle',
       title: 'Extrait / Sous-titre',
-      type: 'string',
-      description: 'Large text displayed near the project in the grid',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Texte riche affiché près du projet dans la grille',
     }),
     defineField({
       name: 'credits',
@@ -116,13 +117,6 @@ export default defineType({
       initialValue: 100,
       validation: (Rule) => Rule.min(50).max(200),
       description: 'Pourcentage de la largeur standard (100 = normal, 50 = petit, 150 = grand)',
-    }),
-    defineField({
-      name: 'linkedProjects',
-      title: 'Projets liés',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'project' }] }],
-      description: 'Projects that should appear adjacent in the grid',
     }),
     defineField({
       name: 'order',

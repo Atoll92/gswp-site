@@ -225,8 +225,8 @@
   text-align: center;
 }
 
-/* Mobile title: shown only on mobile, fades in on viewport entry */
-.mobileTitle {
+/* Mobile info: shown only on mobile, fades in/out on viewport entry */
+.mobileInfo {
   display: none;
 }
 
@@ -239,16 +239,23 @@
     display: none;
   }
 
-  .mobileTitle {
+  .mobileInfo {
     display: block;
-    margin-top: 0.3rem;
-    font-size: 0.8rem;
-    font-weight: 500;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     opacity: 0;
     transition: opacity 0.4s ease;
   }
 
-  .mobileTitleVisible {
+  .mobileInfoVisible {
     opacity: 1;
+  }
+
+  .card {
+    touch-action: pan-y;
   }
 }
