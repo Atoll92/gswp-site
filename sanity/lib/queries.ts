@@ -191,6 +191,28 @@ export async function getJournalPosts(): Promise<JournalPost[]> {
   }
 }
 
+export async function getYearOrders(): Promise<Record<number, string[]>> {
+  if (!isSanityConfigured) return {}
+
+  try {
+    const results = await getClient().fetch(`
+      *[_type == "yearPage"] {
+        year,
+        "projectIds": projects[]._ref
+      }
+    `)
+    const map: Record<number, string[]> = {}
+    for (const r of results) {
+      if (r.year) {
+        map[r.year] = r.projectIds || []
+      }
+    }
+    return map
+  } catch {
+    return {}
+  }
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   if (!isSanityConfigured) return null
 

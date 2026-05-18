@@ -31,6 +31,7 @@ interface HomepageClientProps {
   settings?: SiteSettings | null
   homeOrder?: { order: string[]; excluded: string[] }
   categoryOrders?: Record<string, { order: string[] }>
+  yearOrders?: Record<number, string[]>
 }
 
 export default function HomepageClient({
@@ -40,6 +41,7 @@ export default function HomepageClient({
   settings,
   homeOrder = { order: [], excluded: [] },
   categoryOrders = {},
+  yearOrders = {},
 }: HomepageClientProps) {
   const searchParams = useSearchParams()
   const view = searchParams.get('view') || 'home'
@@ -154,7 +156,7 @@ export default function HomepageClient({
               />
             )}
             {view === 'timeline' && (
-              <ChronologiqueView key="timeline" projects={projects} />
+              <ChronologiqueView key="timeline" projects={projects} yearOrders={yearOrders} />
             )}
           </AnimatePresence>
         </main>

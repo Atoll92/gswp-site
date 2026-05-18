@@ -37,32 +37,58 @@ export const structure: StructureResolver = (S) =>
                 ),
               S.divider(),
               S.listItem()
-                .title('Architecture & Théâtres')
+                .title('Par catégorie')
                 .child(
-                  S.document()
-                    .schemaType('categoryPage')
-                    .documentId('categoryPage-theatres')
+                  S.list()
+                    .title('Par catégorie')
+                    .items([
+                      S.listItem()
+                        .title('Architecture & Théâtres')
+                        .child(
+                          S.document()
+                            .schemaType('categoryPage')
+                            .documentId('categoryPage-theatres')
+                        ),
+                      S.listItem()
+                        .title('Architecture & Intérieurs')
+                        .child(
+                          S.document()
+                            .schemaType('categoryPage')
+                            .documentId('categoryPage-interieurs')
+                        ),
+                      S.listItem()
+                        .title('Expositions')
+                        .child(
+                          S.document()
+                            .schemaType('categoryPage')
+                            .documentId('categoryPage-expos')
+                        ),
+                      S.listItem()
+                        .title('Défilés')
+                        .child(
+                          S.document()
+                            .schemaType('categoryPage')
+                            .documentId('categoryPage-defiles')
+                        ),
+                    ])
                 ),
+              S.divider(),
               S.listItem()
-                .title('Architecture & Intérieurs')
+                .title('Par année (Timeline)')
                 .child(
-                  S.document()
-                    .schemaType('categoryPage')
-                    .documentId('categoryPage-interieurs')
-                ),
-              S.listItem()
-                .title('Expositions')
-                .child(
-                  S.document()
-                    .schemaType('categoryPage')
-                    .documentId('categoryPage-expos')
-                ),
-              S.listItem()
-                .title('Défilés')
-                .child(
-                  S.document()
-                    .schemaType('categoryPage')
-                    .documentId('categoryPage-defiles')
+                  S.list()
+                    .title('Par année')
+                    .items(
+                      [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2017, 2016, 2015, 2014, 2012, 2011].map((year) =>
+                        S.listItem()
+                          .title(String(year))
+                          .child(
+                            S.document()
+                              .schemaType('yearPage')
+                              .documentId(`yearPage-${year}`)
+                          )
+                      )
+                    )
                 ),
             ])
         ),

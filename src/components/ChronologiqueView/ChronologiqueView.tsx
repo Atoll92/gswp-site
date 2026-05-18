@@ -8,9 +8,10 @@ import type { Project } from '@/lib/types'
 
 interface ChronologiqueViewProps {
   projects: Project[]
+  yearOrders?: Record<number, string[]>
 }
 
-export default function ChronologiqueView({ projects }: ChronologiqueViewProps) {
+export default function ChronologiqueView({ projects, yearOrders = {} }: ChronologiqueViewProps) {
   const [visibleYear, setVisibleYear] = useState<number | null>(null)
 
   const grouped = useMemo(() => {
@@ -22,11 +23,24 @@ export default function ChronologiqueView({ projects }: ChronologiqueViewProps) 
     }
     return Object.entries(groups)
       .sort(([a], [b]) => Number(b) - Number(a))
-      .map(([year, items]) => ({
-        year: Number(year),
-        projects: items.sort((a, b) => (a.order || 999) - (b.order || 999)),
-      }))
-  }, [projects])
+      .map(([yearStr, items]) => {
+        const year = Number(yearStr)
+        const orderIds = yearOrders[year]
+        if (orderIds && orderIds.length > 0) {
+          const projectMap = new Map(items.map((p) => [p._id, p]))
+          const ordered = orderIds
+            .map((id) => projectMap.get(id))
+            .filter((p): p is Project => p !== undefined)
+          const orderedIds = new Set(orderIds)
+          const remaining = items.filter((p) => !orderedIds.has(p._id))
+          return { year, projects: [...ordered, ...remaining] }
+        }
+        return {
+          year,
+          projects: items.sort((a, b) => (a.order || 999) - (b.order || 999)),
+        }
+      })
+  }, [projects, yearOrders])
 
   const yearRefs = useRef<Record<number, HTMLDivElement | null>>({})
   const yearNavRefs = useRef<Record<number, HTMLSpanElement | null>>({})
