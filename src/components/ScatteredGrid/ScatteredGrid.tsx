@@ -13,7 +13,7 @@ interface ScatteredGridProps {
 const LANDSCAPE_WIDTHS = [520, 580, 500, 640, 550, 600]
 const PORTRAIT_WIDTHS = [300, 340, 360, 320, 380, 350]
 // Deterministic vertical margin offsets to break grid alignment
-const MARGIN_OFFSETS = [5, 9, 7, 10, 6, 8]
+const MARGIN_OFFSETS = [10, 18, 14, 20, 12, 16]
 
 export default function ScatteredGrid({
   projects,
