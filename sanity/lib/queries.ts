@@ -222,7 +222,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         firmName,
         address,
         email,
-        phone
+        phone,
+        contactText
       }
     `)
   } catch {

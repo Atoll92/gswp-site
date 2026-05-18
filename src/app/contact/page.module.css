@@ -11,6 +11,12 @@
   margin-bottom: 3rem;
 }
 
+.contactText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
 .info {
   font-size: 0.95rem;
   line-height: 1.8;

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header/Header'
 import type { SiteSettings } from '@/lib/types'
 import styles from './page.module.css'
@@ -22,6 +23,11 @@ export default function ContactClient({ settings, bio }: ContactClientProps) {
       <div className={styles.page}>
         <Link href="/" className={styles.backLink}>&larr; Back</Link>
         <h1 className={styles.title}>Contact</h1>
+        {settings?.contactText && settings.contactText.length > 0 && (
+          <div className={styles.contactText}>
+            <PortableText value={settings.contactText} />
+          </div>
+        )}
         <div className={styles.info}>
           <div className={styles.label}>{firmName}</div>
           <div>Atelier Architecture Scénographie</div>

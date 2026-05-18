@@ -26,5 +26,12 @@ export default defineType({
       title: 'Téléphone',
       type: 'string',
     }),
+    defineField({
+      name: 'contactText',
+      title: 'Texte page contact',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Texte affiché sous le titre de la page contact.',
+    }),
   ],
 })

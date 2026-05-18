@@ -62,6 +62,7 @@ export interface SiteSettings {
   address: string
   email: string
   phone: string
+  contactText?: any[]
 }
 
 export type ViewMode = 'home' | 'chronologique' | 'typologique' | string
