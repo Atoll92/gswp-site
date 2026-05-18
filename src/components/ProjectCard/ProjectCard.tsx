@@ -298,9 +298,9 @@ export default function ProjectCard({
         </>
       )}
 
-      {/* Mobile: title only appears on viewport entry */}
+      {/* Mobile: full info appears on viewport entry */}
       <div className={`${styles.mobileInfo} ${inView ? styles.mobileInfoVisible : ''}`}>
-        {project.title}
+        {infoElements}
       </div>
     </div>
   )
