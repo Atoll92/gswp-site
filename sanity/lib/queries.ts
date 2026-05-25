@@ -1,12 +1,19 @@
+import { draftMode } from 'next/headers'
 import { isSanityConfigured, getClient } from './client'
 import type { Project, Category, AboutPage, JournalPost, SiteSettings } from '@/lib/types'
 import { sampleProjects, sampleCategories } from '@/lib/sampleData'
+
+async function fetchClient() {
+  const { isEnabled } = await draftMode()
+  return getClient(isEnabled)
+}
 
 export async function getProjects(): Promise<Project[]> {
   if (!isSanityConfigured) return sampleProjects
 
   try {
-    const results = await getClient().fetch(`
+    const client = await fetchClient()
+    const results = await client.fetch(`
       *[_type == "project"] | order(order asc, year desc) {
         _id,
         title,
@@ -41,7 +48,8 @@ export async function getProject(slug: string): Promise<Project | null> {
   }
 
   try {
-    const result = await getClient().fetch(`
+    const client = await fetchClient()
+    const result = await client.fetch(`
       *[_type == "project" && slug.current == $slug][0] {
         _id,
         title,
@@ -77,7 +85,8 @@ export async function getRelatedProjects(categoryId: string, excludeId: string):
   }
 
   try {
-    const results = await getClient().fetch(`
+    const client = await fetchClient()
+    const results = await client.fetch(`
       *[_type == "project" && category._ref == $categoryId && _id != $excludeId] | order(order asc, year desc) {
         _id,
         title,
@@ -101,7 +110,8 @@ export async function getCategories(): Promise<Category[]> {
   if (!isSanityConfigured) return sampleCategories
 
   try {
-    const results = await getClient().fetch(`
+    const client = await fetchClient()
+    const results = await client.fetch(`
       *[_type == "category"] | order(order asc) {
         _id,
         title,
@@ -119,7 +129,8 @@ export async function getHomeOrder(): Promise<{ order: string[]; excluded: strin
   if (!isSanityConfigured) return { order: [], excluded: [] }
 
   try {
-    const result = await getClient().fetch(`
+    const client = await fetchClient()
+    const result = await client.fetch(`
       *[_type == "homePage" && _id == "homePage"][0] {
         "projectIds": projects[]._ref,
         "excludedIds": excludedProjects[]._ref
@@ -138,7 +149,8 @@ export async function getCategoryOrders(): Promise<Record<string, { order: strin
   if (!isSanityConfigured) return {}
 
   try {
-    const results = await getClient().fetch(`
+    const client = await fetchClient()
+    const results = await client.fetch(`
       *[_type == "categoryPage"] {
         "slug": category->slug.current,
         "projectIds": projects[]._ref
@@ -160,7 +172,8 @@ export async function getAboutPage(): Promise<AboutPage | null> {
   if (!isSanityConfigured) return null
 
   try {
-    return await getClient().fetch(`
+    const client = await fetchClient()
+    return await client.fetch(`
       *[_type == "aboutPage" && _id == "aboutPage"][0] {
         bio,
         content,
@@ -176,7 +189,8 @@ export async function getJournalPosts(): Promise<JournalPost[]> {
   if (!isSanityConfigured) return []
 
   try {
-    return await getClient().fetch(`
+    const client = await fetchClient()
+    return await client.fetch(`
       *[_type == "journalPost"] | order(date desc) {
         _id,
         title,
@@ -195,7 +209,8 @@ export async function getYearOrders(): Promise<Record<number, string[]>> {
   if (!isSanityConfigured) return {}
 
   try {
-    const results = await getClient().fetch(`
+    const client = await fetchClient()
+    const results = await client.fetch(`
       *[_type == "yearPage"] {
         year,
         "projectIds": projects[]._ref
@@ -217,7 +232,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   if (!isSanityConfigured) return null
 
   try {
-    return await getClient().fetch(`
+    const client = await fetchClient()
+    return await client.fetch(`
       *[_type == "siteSettings" && _id == "siteSettings"][0] {
         firmName,
         address,

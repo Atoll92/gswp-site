@@ -9,7 +9,17 @@ export const isSanityConfigured =
 
 let _client: SanityClient | null = null
 
-export function getClient(): SanityClient {
+export function getClient(preview = false): SanityClient {
+  if (preview) {
+    return createClient({
+      projectId,
+      dataset,
+      apiVersion,
+      useCdn: false,
+      token: process.env.SANITY_API_READ_TOKEN,
+      perspective: 'previewDrafts',
+    })
+  }
   if (!_client) {
     _client = createClient({
       projectId,

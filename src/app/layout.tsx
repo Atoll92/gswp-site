@@ -1,4 +1,8 @@
 import type { Metadata } from 'next'
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity/visual-editing'
+import { SanityLive } from '../../sanity/lib/live'
+import { DisableDraftMode } from '@/components/DisableDraftMode'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -6,14 +10,23 @@ export const metadata: Metadata = {
   description: 'Atelier Architecture Scénographie — Paris',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        {children}
+        <SanityLive />
+        {(await draftMode()).isEnabled && (
+          <>
+            <VisualEditing />
+            <DisableDraftMode />
+          </>
+        )}
+      </body>
     </html>
   )
 }
