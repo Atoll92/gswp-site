@@ -65,4 +65,15 @@ export interface SiteSettings {
   contactText?: any[]
 }
 
+export interface PortfolioPage {
+  pdfs: Array<{
+    title: string
+    file: {
+      asset: {
+        url: string
+      }
+    }
+  }>
+}
+
 export type ViewMode = 'home' | 'chronologique' | 'typologique' | string

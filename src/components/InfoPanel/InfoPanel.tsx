@@ -76,7 +76,7 @@ export default function InfoPanel({ isOpen, onClose, bio, settings }: InfoPanelP
               <nav className={styles.nav}>
                 <Link href="/a-propos" className={styles.navLink} onClick={onClose}>About</Link>
                 <Link href="/contact" className={styles.navLink} onClick={onClose}>Contact</Link>
-                <Link href="/" className={styles.navLink} onClick={onClose}>Portfolio</Link>
+                <Link href="/portfolio" className={styles.navLink} onClick={onClose}>Portfolio</Link>
               </nav>
 
               <div className={styles.credits}>

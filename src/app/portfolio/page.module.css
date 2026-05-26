@@ -1,0 +1,48 @@
+.page {
+  padding: var(--content-top) var(--page-padding) 2rem;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pdfLink {
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+}
+
+.pdfLink:hover {
+  opacity: 0.6;
+}
+
+.empty {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+}
+
+.backLink:hover {
+  opacity: 0.6;
+}

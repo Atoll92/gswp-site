@@ -1,6 +1,6 @@
 import { draftMode } from 'next/headers'
 import { isSanityConfigured, getClient } from './client'
-import type { Project, Category, AboutPage, JournalPost, SiteSettings } from '@/lib/types'
+import type { Project, Category, AboutPage, JournalPost, SiteSettings, PortfolioPage } from '@/lib/types'
 import { sampleProjects, sampleCategories } from '@/lib/sampleData'
 
 async function fetchClient() {
@@ -240,6 +240,24 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         email,
         phone,
         contactText
+      }
+    `)
+  } catch {
+    return null
+  }
+}
+
+export async function getPortfolioPage(): Promise<PortfolioPage | null> {
+  if (!isSanityConfigured) return null
+
+  try {
+    const client = await fetchClient()
+    return await client.fetch(`
+      *[_type == "portfolioPage" && _id == "portfolioPage"][0] {
+        pdfs[] {
+          title,
+          "file": { "asset": { "url": file.asset->url } }
+        }
       }
     `)
   } catch {

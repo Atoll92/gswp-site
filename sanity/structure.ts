@@ -18,6 +18,13 @@ export const structure: StructureResolver = (S) =>
             .schemaType('aboutPage')
             .documentId('aboutPage')
         ),
+      S.listItem()
+        .title('Portfolio')
+        .child(
+          S.document()
+            .schemaType('portfolioPage')
+            .documentId('portfolioPage')
+        ),
       S.divider(),
       S.documentTypeListItem('project').title('Projets'),
       S.documentTypeListItem('category').title('Catégories'),
