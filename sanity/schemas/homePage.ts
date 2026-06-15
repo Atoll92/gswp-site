@@ -13,6 +13,7 @@ export default defineType({
         {
           type: 'reference',
           to: [{ type: 'project' }],
+          weak: true,
         },
       ],
       description: 'Seuls les projets listés ici apparaissent sur la page d\'accueil. Glisser-déposer pour réordonner.',

@@ -16,7 +16,7 @@ export default defineType({
       name: 'projects',
       title: "Projets (ordre d'affichage)",
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'project' }] }],
+      of: [{ type: 'reference', to: [{ type: 'project' }], weak: true }],
       description: 'Seuls les projets listés ici apparaissent dans cette catégorie. Glisser-déposer pour réordonner.',
     }),
   ],

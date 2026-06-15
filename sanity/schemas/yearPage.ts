@@ -15,7 +15,7 @@ export default defineType({
       name: 'projects',
       title: "Projets (ordre d'affichage)",
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'project' }] }],
+      of: [{ type: 'reference', to: [{ type: 'project' }], weak: true }],
       description: 'Tous les projets de cette année. Glisser-déposer pour réordonner, supprimer pour masquer.',
     }),
   ],
