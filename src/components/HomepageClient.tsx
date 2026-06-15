@@ -19,8 +19,8 @@ const CATEGORY_KEYS = [
 // Map header menu keys to Sanity category slugs
 const CATEGORY_SLUG_MAP: Record<string, string> = {
   'theaters': 'architecture-theatres',
-  'architectures': 'architecture-interieurs',
-  'expos': 'expositions',
+  'architectures': 'architectures',
+  'expos': 'exhibition',
   'shows': 'defiles',
 }
 
