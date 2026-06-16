@@ -152,7 +152,7 @@ export default function HomepageClient({
               <AleatoireView
                 key={view}
                 projects={filteredProjects}
-                ordered={view === 'home' && homeOrder.order.length > 0}
+                ordered={view === 'home' ? homeOrder.order.length > 0 : (categoryOrders[CATEGORY_SLUG_MAP[view]]?.order?.length ?? 0) > 0}
               />
             )}
             {view === 'timeline' && (
