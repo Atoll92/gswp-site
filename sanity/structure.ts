@@ -83,19 +83,9 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title('Par année (Timeline)')
                 .child(
-                  S.list()
+                  S.documentTypeList('yearPage')
                     .title('Par année')
-                    .items(
-                      [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2017, 2016, 2015, 2014, 2012, 2011].map((year) =>
-                        S.listItem()
-                          .title(String(year))
-                          .child(
-                            S.document()
-                              .schemaType('yearPage')
-                              .documentId(`yearPage-${year}`)
-                          )
-                      )
-                    )
+                    .defaultOrdering([{ field: 'year', direction: 'desc' }])
                 ),
             ])
         ),
