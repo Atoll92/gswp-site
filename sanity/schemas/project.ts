@@ -79,6 +79,13 @@ export default defineType({
       description: 'Used for the Typological view grouping',
     }),
     defineField({
+      name: 'video',
+      title: 'Vidéo',
+      type: 'file',
+      options: { accept: '.mp4,.webm,.mov' },
+      description: 'Vidéo du projet (autoplay, muet). Si renseigné, les images ne sont pas utilisées.',
+    }),
+    defineField({
       name: 'coverImage',
       title: 'Image de couverture',
       type: 'image',

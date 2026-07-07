@@ -27,6 +27,34 @@
   object-fit: cover;
 }
 
+.video {
+  width: 100%;
+  display: block;
+}
+
+.muteToggle {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 0;
+}
+
+.card:hover .muteToggle {
+  opacity: 1;
+}
+
 /* Subtitle / extrait above image */
 .subtitle {
   font-size: clamp(1rem, 2.5vw, 1.6rem);

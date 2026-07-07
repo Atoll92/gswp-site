@@ -27,6 +27,7 @@ function getSlideImageUrl(
 }
 
 export function getProjectOrientation(project: Project): 'landscape' | 'portrait' {
+  if (project.video?.asset?.url) return 'landscape'
   const ref = project.coverImage?.asset?._ref
   if (ref) {
     const dims = getImageDimensions(ref)
@@ -44,7 +45,11 @@ export default function ProjectCard({
   const [currentSlide, setCurrentSlide] = useState(0)
   const [showCaption, setShowCaption] = useState(false)
   const [inView, setInView] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const cardRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const hasVideo = !!project.video?.asset?.url
 
   useEffect(() => {
     const el = cardRef.current
@@ -57,7 +62,7 @@ export default function ProjectCard({
     return () => observer.disconnect()
   }, [])
 
-  // Build slide sequence: cover + images + credits slide
+  // Build slide sequence: cover + images + credits slide (skipped for video projects)
   const slides = useMemo(() => {
     const result: Array<{
       type: 'image' | 'credits'
@@ -65,6 +70,12 @@ export default function ProjectCard({
       localSrc?: string
       caption?: string
     }> = []
+
+    if (hasVideo) {
+      // Video projects: just credits slide
+      result.push({ type: 'credits' })
+      return result
+    }
 
     if (project.coverImage?.asset?._ref || project.localCover) {
       result.push({
@@ -95,7 +106,7 @@ export default function ProjectCard({
 
     result.push({ type: 'credits' })
     return result
-  }, [project])
+  }, [project, hasVideo])
 
   const coverAspectRatio = useMemo(() => {
     const ref = project.coverImage?.asset?._ref
@@ -107,7 +118,7 @@ export default function ProjectCard({
   }, [project.coverImage])
 
   const isLandscape = coverAspectRatio ? coverAspectRatio > 1 : true
-  const isTextOnly = !project.coverImage?.asset?._ref && !project.localCover
+  const isTextOnly = !hasVideo && !project.coverImage?.asset?._ref && !project.localCover
   const hasImage = !isTextOnly
 
   const totalSlides = slides.length
@@ -123,13 +134,24 @@ export default function ProjectCard({
 
   const advanceSlide = useCallback(() => goToSlide(1), [goToSlide])
 
+  const toggleMute = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted
+      setIsMuted(videoRef.current.muted)
+    }
+  }, [])
+
   const handleClick = useCallback(() => {
+    if (hasVideo) {
+      toggleMute()
+      return
+    }
     if (currentCaption && !showCaption && typeof window !== 'undefined' && 'ontouchstart' in window) {
       setShowCaption(true)
       return
     }
     advanceSlide()
-  }, [currentCaption, showCaption, advanceSlide])
+  }, [hasVideo, toggleMute, currentCaption, showCaption, advanceSlide])
 
   // Horizontal swipe support for mobile carousel
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
@@ -210,6 +232,39 @@ export default function ProjectCard({
     infoElements.push(<span key="year" className={styles.infoDetail}>{project.year}</span>)
   }
 
+  const videoBlock = hasVideo ? (
+    <div className={styles.imageContainer}>
+      <video
+        ref={videoRef}
+        src={project.video!.asset.url}
+        className={styles.video}
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <button
+        className={styles.muteToggle}
+        onClick={(e) => { e.stopPropagation(); toggleMute() }}
+        aria-label={isMuted ? 'Unmute' : 'Mute'}
+      >
+        {isMuted ? (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+        )}
+      </button>
+    </div>
+  ) : null
+
   const imageBlock = (
     <div className={styles.imageContainer} style={containerStyle}>
       {currentSlideData?.type === 'credits' ? (
@@ -261,8 +316,8 @@ export default function ProjectCard({
   return (
     <div
       ref={cardRef}
-      className={`${styles.card} ${className} ${hasMultipleSlides ? styles.clickable : ''}`}
-      onClick={hasMultipleSlides ? handleClick : undefined}
+      className={`${styles.card} ${className} ${(hasMultipleSlides || hasVideo) ? styles.clickable : ''}`}
+      onClick={(hasMultipleSlides || hasVideo) ? handleClick : undefined}
       onTouchStart={hasMultipleSlides ? handleTouchStart : undefined}
       onTouchEnd={hasMultipleSlides ? handleTouchEnd : undefined}
     >
@@ -276,7 +331,17 @@ export default function ProjectCard({
         </div>
       )}
 
-      {!isLandscape ? (
+      {hasVideo ? (
+        /* Video: full width, horizontal info below */
+        <>
+          {videoBlock}
+          <div className={styles.info}>
+            <span className={styles.infoLink}>
+              {infoElements}
+            </span>
+          </div>
+        </>
+      ) : !isLandscape ? (
         /* Portrait: image + vertical info side by side */
         <div className={styles.imageWrapperPortrait}>
           <div className={styles.imageColumn}>
