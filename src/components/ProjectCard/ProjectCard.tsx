@@ -62,13 +62,23 @@ export default function ProjectCard({
     return () => observer.disconnect()
   }, [])
 
-  // Force muted property on video element (React doesn't always set it correctly)
+  // Play/pause video based on viewport visibility; force muted for autoplay
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true
-      videoRef.current.play().catch(() => {})
+    const vid = videoRef.current
+    if (!vid) return
+    vid.muted = true
+    // Disable PiP to prevent Safari from hijacking playback
+    if ('disablePictureInPicture' in vid) {
+      vid.disablePictureInPicture = true
     }
-  }, [hasVideo])
+    // @ts-expect-error Safari webkitSetPresentationMode
+    if (vid.webkitSetPresentationMode) vid.webkitSetPresentationMode('inline')
+    if (inView) {
+      vid.play().catch(() => {})
+    } else {
+      vid.pause()
+    }
+  }, [hasVideo, inView])
 
   // Build slide sequence: cover + images + credits slide (skipped for video projects)
   const slides = useMemo(() => {
@@ -247,11 +257,13 @@ export default function ProjectCard({
         ref={videoRef}
         src={project.videoUrl!}
         className={styles.video}
-        autoPlay
         muted
         loop
         playsInline
         preload="auto"
+        disablePictureInPicture
+        {...{ 'webkit-playsinline': '' } as any}
+        poster={project.coverImage?.asset?._ref ? urlFor(project.coverImage).width(800).url() : undefined}
       />
       <button
         className={styles.muteToggle}
