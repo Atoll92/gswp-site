@@ -62,6 +62,14 @@ export default function ProjectCard({
     return () => observer.disconnect()
   }, [])
 
+  // Force muted property on video element (React doesn't always set it correctly)
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true
+      videoRef.current.play().catch(() => {})
+    }
+  }, [hasVideo])
+
   // Build slide sequence: cover + images + credits slide (skipped for video projects)
   const slides = useMemo(() => {
     const result: Array<{
@@ -234,6 +242,7 @@ export default function ProjectCard({
 
   const videoBlock = hasVideo ? (
     <div className={styles.imageContainer}>
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         ref={videoRef}
         src={project.videoUrl!}
@@ -242,6 +251,7 @@ export default function ProjectCard({
         muted
         loop
         playsInline
+        preload="auto"
       />
       <button
         className={styles.muteToggle}
