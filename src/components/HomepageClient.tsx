@@ -67,16 +67,19 @@ export default function HomepageClient({
     if (!isCategory) return homeProjects
     const sanitySlug = CATEGORY_SLUG_MAP[view]
 
-    // Categories: inclusion-based, same as homepage
+    // Category projects: ordered first, then any new projects not yet in the list
+    const categoryProjects = projects.filter((p) => p.category?.slug?.current === sanitySlug)
     const orderIds = categoryOrders[sanitySlug]?.order || []
     if (orderIds.length > 0) {
-      const projectMap = new Map(projects.map((p) => [p._id, p]))
-      return orderIds
+      const projectMap = new Map(categoryProjects.map((p) => [p._id, p]))
+      const orderSet = new Set(orderIds)
+      const ordered = orderIds
         .map((id) => projectMap.get(id))
         .filter((p): p is Project => p !== undefined)
+      const remaining = categoryProjects.filter((p) => !orderSet.has(p._id))
+      return [...ordered, ...remaining]
     }
-    // Fallback: show all projects in this category
-    return projects.filter((p) => p.category?.slug?.current === sanitySlug)
+    return categoryProjects
   }, [projects, homeProjects, view, isCategory, categoryOrders])
 
   // Open sidebar when user scrolls to the bottom sentinel
