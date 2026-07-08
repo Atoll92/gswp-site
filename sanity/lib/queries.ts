@@ -31,7 +31,7 @@ export async function getProjects(): Promise<Project[]> {
           ...,
           caption
         },
-        "video": { "asset": { "url": video.asset->url } },
+        "videoUrl": video.asset->url,
         displaySize,
         order
       }
@@ -68,7 +68,7 @@ export async function getProject(slug: string): Promise<Project | null> {
           ...,
           caption
         },
-        "video": { "asset": { "url": video.asset->url } },
+        "videoUrl": video.asset->url,
         displaySize,
         order
       }

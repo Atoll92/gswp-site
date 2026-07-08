@@ -12,7 +12,7 @@ export interface Project {
   tags: string[]
   coverImage: SanityImage
   images: SanityImage[]
-  video?: { asset: { url: string } }
+  videoUrl?: string
   displaySize?: number
   order: number
   // Local images for sample data (before Sanity is populated)

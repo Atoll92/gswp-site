@@ -27,7 +27,7 @@ function getSlideImageUrl(
 }
 
 export function getProjectOrientation(project: Project): 'landscape' | 'portrait' {
-  if (project.video?.asset?.url) return 'landscape'
+  if (project.videoUrl) return 'landscape'
   const ref = project.coverImage?.asset?._ref
   if (ref) {
     const dims = getImageDimensions(ref)
@@ -49,7 +49,7 @@ export default function ProjectCard({
   const cardRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const hasVideo = !!project.video?.asset?.url
+  const hasVideo = !!project.videoUrl
 
   useEffect(() => {
     const el = cardRef.current
@@ -236,7 +236,7 @@ export default function ProjectCard({
     <div className={styles.imageContainer}>
       <video
         ref={videoRef}
-        src={project.video!.asset.url}
+        src={project.videoUrl!}
         className={styles.video}
         autoPlay
         muted
