@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { draftMode } from 'next/headers'
 import { VisualEditing } from 'next-sanity/visual-editing'
-import { Analytics } from '@vercel/analytics/next'
 import { SanityLive } from '../../sanity/lib/live'
 import { DisableDraftMode } from '@/components/DisableDraftMode'
 import './globals.css'
@@ -20,7 +20,13 @@ export default async function RootLayout({
     <html lang="fr">
       <body>
         {children}
-        <Analytics />
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            defer
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          />
+        )}
         <SanityLive />
         {(await draftMode()).isEnabled && (
           <>
