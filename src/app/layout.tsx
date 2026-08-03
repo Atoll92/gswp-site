@@ -8,7 +8,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Georgi Stanishev & William Parlon',
-  description: 'Atelier Architecture Scénographie — Paris',
+  description: 'george.william is an architecture and scenography studio founded in Paris in 2014. Its activities cover the fields of architecture, exhibition, set design, installations, teaching in France and abroad.',
 }
 
 export default async function RootLayout({
